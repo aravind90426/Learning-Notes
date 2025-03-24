@@ -1,0 +1,526 @@
+Servelet
+---------
+
+	->server component
+
+
+
+
+               req
+    	      ----->     
+   client			server
+	      response
+	      <-------
+
+
+we are client sends a request to server
+
+server can give the page which is response
+
+
+Request
+
+ -> Static request   (aldeready built)
+          
+         irukuratha kekurathu
+        like home page button service page
+
+-> Dynamic request   (built at run time)
+
+         poi search pandrathu, puthusa namakkaka create pandrathu la
+
+
+
+
+Dynamic ka vara ella request server handle panna web container nu oru helper ra vechu handle pannuthu    (apacheTomcat is a web container)
+
+web container vara dynamic request ku dynamic ka response anuputhu
+
+web container kulla servelet irukku 
+
+servlet - java files
+
+servlet tha response pannum
+
+
+there are lot of servelet in the web container 
+
+for each  different request can  use the diff servlet;
+
+
+->  entha  page ku entha servelet nu solldarthu xml use pannuvom
+
+
+HTTP Reqwuest -> Server -> wqebContainer -> Servlets - web.xml
+
+Deployment Descriptor - web.xml
+
+quick review 
+
+client sents a request to server . when it si dynamic request server uses webcontainer int he webcontainer  deploymentdescriptor maps which servelet  for whiched request 
+servelet takes the request , process and response as object  then serialized to html or js or json format
+A servlet cannot directly return an object as the HTTP response, but it can serialize the object into a suitable format such as JSON, XML, or binary data, which can then be sent in the response body.
+
+
+WHAT IS SERVELET ?
+
+	servelet is an java file  
+namma  kdukura dynamic http request ta  web.xml la use panni nammaku response kudukum
+
+
+        
+public class HelloWorldServlet extends HttpServlet {     // this http servelet have all the imformation you needs like  request process sent
+	
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Set response content type
+        response.setContentType("text/html");
+
+        // Actual logic
+        PrintWriter out = response.getWriter();
+        out.println("<h1>" + message + "</h1>");
+    }
+
+}
+
+
+
+ithu tha basic code
+
+ithu html la mattum return pannathu json , xml ellathiyum return pannum
+
+
+ippo nammaku enga problem na xml kastama irukkum  tha 
+
+@WebServelet("/aboutus.html")                            -> ippadi kudutha pothum  servelet elutha theva illa
+public class HelloWorldServlet extends HttpServlet {
+	
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Set response content type
+        response.setContentType("text/html");
+
+        // Actual logic
+        PrintWriter out = response.getWriter();
+        out.println("<h1>" + message + "</h1>");
+    }
+
+}
+
+----------------------------------------------------------------
+set up 
+
+ 1-) topcat and eclipse
+ 
+ 2) in the bottom server box 
+    
+      -> tap 2 times or set start or stop  
+      -> check in localhost:8080
+      -> if you want change the port number
+
+----------------------------------------------------------------
+Creatig project
+
+1) File  -> new -> dynamic web project -> enter project name -> next ->next -> click deployment descriptor -> finsh
+2) right click -> create html-> run as-> run on server -> click apache tomcat -> finish it will create the static page
+
+if you want change browser 
+  window -> browser -> change
+
+------------------
+1)
+ <form action ="add">
+  Enter num1 : <input type = "number" name = "num1">
+  Enter num1 : <input type = "number" name = "num1">
+  <input type="submit">
+  </form>
+
+it  will give 404 error because servelet not created
+
+
+
+public class AddServelet extends HttpServlet{
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		int a =Integer.parseInt(req.getParameter("num1"));
+		int b  =Integer.parseInt(req.getParameter("num2"));
+		PrintWriter  out = res.getWriter();
+		out.println(a+b);
+	}
+}
+
+it give also 404 error because it does not map in web.xml
+
+http://localhost:8080/DemoApp1/add?num1=1&num1=2   it is called query string 
+
+
+xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <servlet>
+    <servlet-name>Add</servlet-name>
+     <servlet-class>com.aravind.AddServelet</servlet-class>
+   
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Add</servlet-name>
+  	 <url-pattern>/add</url-pattern>
+  	
+  	</servlet-mapping>
+</web-app>
+
+
+
+successfully runned first servelet code:
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+doGet and dopost method 
+
+doget shows the information in link
+
+dopost doesn't shows
+
+InHttp protocol we have 7 protocols commonlyus this 5
+
+Get
+Delete
+Put
+Post
+Option
+
+
+service method accept get and post method
+
+you want only get method or only post method
+public class AddServelet extends HttpServlet{
+	
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		int a =Integer.parseInt(req.getParameter("num1"));
+		int b  =Integer.parseInt(req.getParameter("num2"));
+		PrintWriter  out = res.getWriter();
+		out.println(a+b);
+	}
+}
+
+or use both method
+
+HttpService call service method  initially then that can call based on get or post
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+calling one servlet to another servelet 
+
+
+public class AddServelet extends HttpServlet{
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		int a =Integer.parseInt(req.getParameter("num1"));
+		int b  =Integer.parseInt(req.getParameter("num2"));
+		int sum = a+b;
+		req.setAttribute("sum",sum);                           // used for passing value to another servelet
+		RequestDispatcher r = req.getRequestDispatcher("Sq");
+		r.forward(req, res);
+	}
+}
+public class SqServelet extends HttpServlet{
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		
+		int squ = (int)req.getAttribute("sum");
+		squ = squ*squ;
+		
+		PrintWriter out = res.getWriter();
+		out.print(squ);
+		
+	}
+}
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <servlet>
+    <servlet-name>Add</servlet-name>
+     <servlet-class>com.aravind.AddServelet</servlet-class> 
+  </servlet>
+  <servlet-mapping>
+  	 <servlet-name>Add</servlet-name>
+  	 <url-pattern>/add</url-pattern>
+  	</servlet-mapping>
+  	
+  	 <servlet>
+    	<servlet-name>Sq</servlet-name>
+        <servlet-class>com.aravind.SqServelet</servlet-class>   
+ 	 </servlet>
+  	<servlet-mapping>
+  	   <servlet-name>Sq</servlet-name>
+         <url-pattern>/Sq</url-pattern>
+  	</servlet-mapping>
+  	
+</web-app>
+
+
+------------------------------------------------------------------------------------------------------------------
+
+in a servelet life cycle 
+
+1) init
+2) service 
+3) destroy
+
+
+in serive methpd 
+
+1) httpServeletRequest & httpServeletResponse
+
+   -> both are interface
+
+  -> client  -----------------------------------------------> server
+                           req
+
+   -> the request object contains all the details of client side 
+
+   client <---------------------------------------------------- server
+                          res
+  
+  -> the response contains all the details of server side it have html , etc
+--------------------------------------------------------------------------------------------------------------------------------------
+
+RequestDispatcher and SendRedirectTheory
+---------------------------------------
+  -> which needs for calling servlet from a servlet.
+
+                                         req1,res1
+      browser ----------------------------> s1 ------------------------------->s2
+
+        -> if you want add more details from s1 . you can add in req1.setAttribute("sum",sum);
+        -> the same req obj and res obj can send to   s2
+
+
+        browser ----------------------------> s1 ------------------------------->s2
+          ^                       						  |
+	  |-----------------------------------------------------------------------|
+                                       res1
+
+           s2 can sent response to browser
+
+            browser does not know the link is from s1 or s2.  but the url marked as s1.
+
+                              
+                   
+   -> it can be done by request Dispatcher
+
+
+but this method done perfect in for same website. but different web site the client does not know so we go far
+sendRedirect Theory
+
+---------------------------------------------------------------------------------------
+SendRedirectTheory
+  
+                           req1
+ 	 browser ----------------------------> s1 
+           |^                res1     		|				  |
+	   ||-----------------------------------|
+           |
+	   |	             req2
+           |----------------------------------->s2
+           ^                 res2                |
+           |-------------------------------------|
+
+
+   -> it crestes two object . if u want send any data two second object use session management.
+
+  
+
+ ----------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <form action ="add" method ="post">
+  Enter num1 : <input type = "text" name = "num1">
+  Enter num1 : <input type = "text" name = "num2">
+  <input type="submit">
+  </form>
+</body>
+</html>
+
+
+public class AddServelet extends HttpServlet{
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		int a =Integer.parseInt(req.getParameter("num1"));
+		int b  =Integer.parseInt(req.getParameter("num2"));
+		int sum = a+b;
+		res.sendRedirect("Sq");  // it will
+	}
+}
+
+public class SqServelet extends HttpServlet{
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		PrintWriter out = res.getWriter();
+		out.print("hi");	
+		
+	}
+}
+// xml will same above
+<servlet>
+    <servlet-name>Add</servlet-name>
+     <servlet-class>com.aravind.AddServelet</servlet-class> 
+  </servlet>
+  <servlet-mapping>
+  	 <servlet-name>Add</servlet-name>
+  	 <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+  	
+   <servlet>
+    	<servlet-name>Sq</servlet-name>
+        <servlet-class>com.aravind.SqServelet</servlet-class>   
+  </servlet>
+  <servlet-mapping>
+  	   <servlet-name>Sq</servlet-name>
+       <url-pattern>/Sq</url-pattern>
+  </servlet-mapping>
+
+
+ url ;http://localhost:8080/DemoApp1/Sq
+
+-------------------------------------------------------------------------------------------------
+
+There are three ways to share data one servelet to another servelet in  session management
+
+ 1) cookies
+ 2) Session
+ 3)url rewiting
+
+
+---------------------------------------------------------
+3) url 
+
+ above the same code
+public class SqServelet extends HttpServlet{
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		
+		int squ = Integer.parseInt(req.getParameter("sum"));  // it will from req client again call it
+		squ = squ*squ;
+		
+		PrintWriter out = res.getWriter();
+		out.print(squ);
+		
+	}
+}
+
+   it will give error
+  http://localhost:8080/DemoApp1/Sq   
+
+ but we add in this url it will work.
+http://localhost:8080/DemoApp1/Sq?sum=9  - it will run;
+
+
+same as in the code
+public class AddServelet extends HttpServlet{
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		int a =Integer.parseInt(req.getParameter("num1"));
+		int b  =Integer.parseInt(req.getParameter("num2"));
+		int sum = a+b;
+		res.sendRedirect("Sq?sum="+sum);
+	}
+}
+
+alter in the url it will run successfully;
+--------------------------------------------------------------------------------------------
+
+COOKIES
+
+
+using session
+-------------
+
+public class AddServelet extends HttpServlet{
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		int a =Integer.parseInt(req.getParameter("num1"));
+		int b  =Integer.parseInt(req.getParameter("num2"));
+		int sum = a+b;
+		HttpSession session = req.getSession();        // which is used to crate session
+		session.setAttribute("sum",sum);
+		res.sendRedirect("Sq");
+	}
+}
+
+public class SqServelet extends HttpServlet{
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		HttpSession session = req.getSession();     
+		int squ = (int) session.getAttribute("sum");
+		squ= squ*squ;
+		
+		PrintWriter out = res.getWriter();
+		out.print(squ);
+		
+	}
+}
+
+Why We Use Sessions (2 Marks Answer):
+Sessions are used in web development to maintain user-specific data across multiple requests in a stateless HTTP protocol. They help track user login status, preferences, or shopping cart data by storing this information securely on the server, enabling personalized and stateful user experiences.
+
+
+Cookies
+-------
+
+ublic class AddServelet extends HttpServlet{
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		int a =Integer.parseInt(req.getParameter("num1"));
+		int b  =Integer.parseInt(req.getParameter("num2"));
+		int sum = a+b;
+		Cookie cookie = new Cookie("sum",sum+"");
+		res.addCookie(cookie);
+		res.sendRedirect("Sq");
+	}
+}
+
+public class SqServelet extends HttpServlet{
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException , ServletException{
+		int squ =0;
+		Cookie cookies[] = req.getCookies();
+		for(Cookie c :cookies)
+		{
+			if(c.getName().equals("sum"))
+			{
+				squ = Integer.parseInt(c.getValue());
+				break;
+				
+			}
+				
+		}
+		
+		
+		squ= squ*squ;
+		
+		PrintWriter out = res.getWriter();
+		out.print(squ);
+		
+	}
+}
+
+Cookies are small pieces of data stored on a user's browser by a web server. 
+They are used to remember information about the user, such as login details, preferences, or browsing history,
+ and are sent back to the server with each subsequent request.
+
+-> we can also set time for cookies
+
+-> A session in web development is a way to store information about a user on the server
+ while they interact with a web application. It allows data to be shared across multiple pages
+ or requests during a user's visit to a website.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+  SERVLETCONTEXT AND SERVLET CONFIQURATION
+
+The ServletContext is used to share data across the entire web application, access application resources,
+ retrieve configuration parameters, and log messages.

@@ -1,0 +1,229 @@
+Categorization of Product Streams
+
+We have 3 diff Companies
+
+
+
+1) LIFAFA
+2) Ghoomo
+3) Fundle
+
+
+Lifafa
+
+     Vouchers 
+     Gift careds
+     Incentives
+     Rewards
+     Wallet
+
+
+    -> GIFT Card Issencance - ( GCI)
+    -> Gift Card MarketPlace - (GCM)
+    -> Wallet Management System (WMS)
+    -> Employee Store
+
+
+-> GIFT CARD ISSuence -(GCI)
+
+   - its like a who issued the gift cards
+
+-> Gift Card MarketPlace - (GCM)
+
+   -  its like who accept our market places
+
+-> Wallet Management System (WMS)
+
+    - it is a part of the lifafa . initially its not a open wallet.
+   - we have our own wallet System
+
+
+   open wallet - we need to get a licenece from a rbi
+
+   
+   
+-> Employee Store
+     
+        -> its Know as work Store
+     
+__________________________________________________________________________________________
+Ghoomo 
+
+      
+         
+         - Flights - Aggregation , airline , airport , stock credentials (admin portal login  )
+         -> Flight Connector Service
+         -> Flight  Back office
+
+-> -> it is currentrtly B2b Producut . not B2c
+
+->  Currently people from the different op team
+
+   we have roughly around 10K travel agents right now with us
+
+-> Global distribution System
+
+  -> Low cast Servuices  - indico fiject 
+  -> full scale services  - Air India, withaj
+
+   these people give information 
+
+   eg) Indigo will  give  ehat are the flights are available for that day
+
+
+ *) Flight Connector Service
+
+    - each have  airlines we have a connections
+   - Diff apis Are provided by each air lines
+
+   - We have integrated with like Indico , spizxa , air India ..
+
+__________________________________________________________________________________
+
+Fundle
+
+
+   *  Mall Management Services
+
+   *  Fundle - Maobile App(FMA)
+___________________________________________________________________________
+
+DRUPAL (DRP) - Contains All The repo related to content management Page
+
+  -> all the content management can be done by drupal
+  _________________________________________________________________________________
+Common Servies
+      
+   -> Company Profile
+   -> User profile
+   -> Places
+   ->Masters
+   -> Document Servioces
+
+    
+     
+  
+    -CSS (Common System Service)
+    - Company Profile Management(CPM)
+    - User Profile ManageMent  (UPM)
+    - Store Front Mangement ( SFM)
+    
+
+Payment 
+    
+    - Payment Acceptance Service (PAS) - offline payment , payment engine, payment rule engine etc
+    
+
+    Payment System
+         Credit card 
+         Net Banking
+         UPI
+         Other wallets
+
+ Universal Product
+
+   -> Convient fee
+   -> Service fee
+
+
+
+_________________________________________________________________________________________-
+
+PAS
+
+PAYMENT Acceptance System
+
+
+
+ > Payment
+   
+       -> Any Systems that facilitate to transfer money from sender to reciver
+
+       Types of payment
+
+          ->   Online Payment Through Our website
+  
+         ->    Offline Payment Link
+
+         ->    Offline Payment Authorization
+
+
+->  Payment Modes
+
+        -> UpI
+        -> Netbanking
+        -> Debit/credit
+	-> Wallet
+        -> LGC
+
+
+
+PAYMENT GATEWAY
+
+
+     payment gateway is a service that securely processes online payments between buyers and sellers. It acts as a bridge between a customer’s payment method (like a card or digital wallet) and the merchant’s bank. 
+
+How It Works:
+Customer Makes a Payment – Enters payment details on a website or app.
+Encryption & Authentication – The payment gateway encrypts the details and sends them securely.
+Bank Authorization – The customer’s bank verifies the transaction and approves or declines it.
+Transaction Completion – If approved, the payment is processed, and the merchant gets the money.
+
+
+*   Three types of payment gateway:
+
+       
+          -> Razorpay payment Gateway
+	 
+          -> wallet Payment
+
+          -> Gift Card Payment  (LGC)
+ 
+
+
+*     Razorpay Payment:
+
+
+      -> Razorpay is one of the payment solution  that allows business to accept , process and commission disburse payment qith suite.
+
+      -> they take commissions
+
+  Their standard fee structure
+   2% + GST for domestic transactions (UPI, cards, net banking, wallets)
+   3% + GST for international cards and AMEX transactions
+
+
+
+*    Wallet Payment
+
+      -  The Lifafa wallet functions like an E-wallet (electronic wallet).
+      -  When making a payment within the platform, users just need to provide their wallet number to complete the transaction.
+      -  This means the payment is quick and seamless, as the wallet already holds stored funds.
+
+
+*   Gift  Card Payment:
+
+     - A Gift Card is a preloaded digital card with a fixed amount of money.
+     - The recipient can use this virtual card to purchase products from a specific store.
+     - The amount on the card can be used to pay for products without needing a separate payment method.
+
+
+
+
+
+
+More about wallet payment
+-----------------------
+
+  Wallet System fetures
+___________________________]
+
+
+
+  ->
+
+   
+amazon cloud instead gcp
+
+
+

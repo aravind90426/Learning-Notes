@@ -1,0 +1,184 @@
+git and git hub
+________________
+
+
+                                                                                              press q when you stuck
+
+1) Download git through google
+
+2) in command prompt
+ 
+     ->  type-    git     //check downloaded or not
+     
+     -> >git config --global user.name "aravind90426"  // set username 
+
+     ->  >git config --global user.email "aravind90426"  
+
+open vs code 
+
+   -> open folder
+
+    ->  open Terminal
+
+commands
+---------
+
+
+ ->   git clone https://link         // which is used to mern-stack irukkura repository ya namma folder ku konduvarom
+
+->    cd MERN-STACK                  // cd vanthu nama antha folder kulla move panndraku use panrom
+
+----------------------------------------------------------------------------------------------------------------------
+
+task - create a fle in vs and insert into GitHub using terminal
+
+ flow  - INSERT-> ADD ->Commit -> Push
+
+ ->   git add text3.txt    //add staging area
+
+  ->  git commit -m "created text3"  // some message m denotes commands
+
+  ->  git push origin main  // used to push in GitHub
+
+  ->  git status   // check status
+
+
+--------------------------------------------------------------------------------
+
+task - modify the txt3 file
+
+
+-> git add text3.txt
+
+-> git commit -m "modified"
+
+-> git push origin main
+
+
+------------------------------------------------------------------
+
+Task - delete the file      // first delete in vs code
+
+
+-> git add text3.txt
+
+-> git commit -m "deleted"
+
+-> git push origin main
+
+---------------------------------------------------------------------------------
+
+Task - changes in GitHub update in  vscode
+
+-> git pull
+
+  or 
+
+-> git pull origin main
+
+---------------------------------------------------------------------------------
+
+Task - create new folder and files in vscode add in GitHub  using git init
+
+
+->   cd ..           //which is used to back the folder
+
+
+->   cd full-stack   // move to fullstack folder
+
+->   git init       // which is used to initialize git in this folder- hidden la git nu irukkum   
+                          - it creates two folder git and working folder
+
+
+-> git add .        // modify panna ella file lum git la add aayuurum
+
+-> git commit -m "created index.html and style.css"       
+
+-> // create new repository in GitHub copy the link address
+
+-> git remote add origin https://github.com/aravind90426/full-stack.git
+
+-> git branch                // checking which branch main or master
+
+-> git push origin master
+
+       or
+
+-> git branch -M main        // change name master as main
+
+-> git branch               // check branch
+
+-> git push origin main      // push all data
+
+--------------------------------------------------------------------------------------------------------
+
+
+BRANCHING   - multi member puthusa work panni atha main la kadasiya merge pannuvanga 
+__________
+___________
+
+
+
+
+-> git branch -a                       // list out all branches
+
+-> git checkout main-2               // switch to another branch 
+
+// create new file
+
+-> git add .
+
+-> git commit -m "crated newfile.txt"
+
+-> git push origin main-2             // intha file main-2 la mattum tha irukkum
+
+-> git checkout main                   // newfile.txt irukkathu
+
+-> git checkout main -2              // ippo newfile.txt vanthurum
+
+
+
+
+--------------------------------------------------------------------------------------------------
+
+Task - make copy to main branch
+
+-> git diff main-2                   // it shows difference
+
+-> git merge main-2                  // merge the files in main
+
+-> git push origin main              // make changes in github
+
+->clear                              // clear the coment
+ 
+------------------------------------------------------------------------------------------------
+
+PULL REQUEST     - sent the request to boss for merge my file into main
+-------------
+
+-> git branch main-3                // creating new branch
+
+-> git branch -a              
+
+
+---------------------------------------------------------------------------------------------------
+
+
+conflict  - oru main branchha  another two branch moolama change panna git confusion aairum we can do manually using pull req
+--------
+    
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+In IntelliJ
+
+
+
+Task -> load the GitHub repository in intelij
+
+
+
+	file -> new-> project from version control -> paste the link
+

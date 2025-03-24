@@ -1,0 +1,58 @@
+public ListNode reverseKGroup(ListNode head, int k) {
+    
+    if(k<=1 || head==null) return head;
+      ListNode temp =head;
+      ListNode Last =null;
+      while(temp!=null)
+      {
+
+        ListNode kthN =kthNode(k,temp);
+        if(kthN==null)
+         {
+        Last.next=temp;
+        return head;
+
+         }
+        ListNode NextN = kthN.next;
+        kthN.next=null;
+         kthN= reverse(temp);
+
+         
+         if(temp==head)
+         {
+            head=kthN;
+         }
+         else
+         {
+            Last.next=kthN;
+         }
+         Last=temp;
+           
+         temp=NextN;
+       
+      }
+      return head;
+    }
+    public ListNode kthNode(int k,ListNode node){
+    
+       int i=k;
+       ListNode temp = node;
+       while(i>0 && temp!=null)
+       {
+        temp=temp.next;
+        i--;
+            
+       }
+       return temp;
+    }
+    public ListNode reverse(ListNode head)
+    {
+        if(head==null || head.next==null) return head;
+         ListNode NewHead= reverse(head.next);
+         head.next.next = head;
+         head.next=null;
+
+
+         return NewHead;
+
+    }

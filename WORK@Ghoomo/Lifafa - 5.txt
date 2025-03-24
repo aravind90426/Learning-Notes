@@ -1,0 +1,89 @@
+Lifafa - 5
+
+Platform - 
+  
+ - it is a Cerntralized one
+
+- It is a basic one of all the ghoomo, lifafa, fundle
+
+
+
+ Infra System Services Management
+
+  1) Keycloak
+ 
+   - contains many feature like  user registractrion , Two factor Authontication
+
+   eycloak is an open-source identity and access management (IAM) solution developed by Red Hat. It provides authentication, authorization, and user management for applications and services.
+
+Key Features of Keycloak
+Single Sign-On (SSO) – Users can log in once and access multiple applications without re-entering credentials.
+Identity Brokering & Social Login – Supports login via third-party identity providers like Google, Facebook, and GitHub.
+User Federation – Integrates with external user directories (LDAP, Active Directory).
+Multi-Factor Authentication (MFA) – Enhances security with additional authentication steps.
+Role-Based Access Control (RBAC) – Supports fine-grained permissions based on roles.
+OAuth 2.0, OpenID Connect, and SAML 2.0 – Provides secure authentication protocols for modern applications.
+Admin Console – Web-based interface to manage users, roles, and permissions.
+Session Management – Allows administrators to manage and terminate user sessions.
+Client Adapters – Supports integration with various platforms like Java, Node.js, and Spring Boot.
+Use Cases
+Secure user authentication in web and mobile applications.
+Implementing Single Sign-On (SSO) for enterprise applications.
+Managing access to microservices and APIs.
+Integrating third-party identity providers.
+
+ in our system we can maintin 
+
+  Mauth and Lauth
+
+
+toways of login
+
+1) Mauth- Developer,admin  login 
+
+2) Lauth - user or store login
+
+
+
+
+
+___________________________________________________
+
+
+
+common system management
+
+1) Places 
+      
+      in places, we can able to maintain the countries, proviences and cities
+
+
+manage places in the mauth login 
+
+
+    -> we can activate and deactivate
+
+   -> we can create country, states
+
+
+______________________________________________________________________________
+
+3) Document Store:
+ 
+             in document store, we can store the documents and retrive it in a serialized place.  This can support any type of platform to upload the files or im,ages like AmazonS2 , Google cloud or File System which can be switched at any time.
+
+
+sample 
+
+where we can use
+
+ many places we can use the documentation
+
+
+___________________________________________________________________________________
+
+4) Master and Product Management
+
+
+    here we can maintain all the master data like legal entities , industry types , systems , currencies , card networks and then we can maintain products, taxes, order types, order status and relation types
+

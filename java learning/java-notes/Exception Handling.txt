@@ -1,0 +1,80 @@
+Error
+
+can be classified into 3 types.
+
+i) Compile time error.
+ii) Run time error
+iii) Logical Error    worng output
+
+
+Excepetion means it is called as  run time error
+
+	it is not a compile time and logical  . it can be happened when the program is after executed.
+
+
+Excepetion handling is a mechanism in java which is used to handle the exception.
+
+1️⃣ try block – Code that may cause an exception.   which can be used for identified our code has any error or not.
+2️⃣ catch block – Handles the exception if one occurs.    
+3️⃣ finally block – Executes after try-catch, whether an exception occurs or not.
+4️⃣ throws keyword – Used in method signatures to indicate that a method can throw an exception.
+5️⃣ throw keyword – Used to manually throw an exception.
+
+
+we can use multiple catch block. but the parent class Excepetion put atthe last
+
+
+                                object
+
+                                  |
+
+                                Throwble 
+
+                Error                                  exception
+
+
+1) io error                                            1)RunTime Exception               2)  Sql exception
+							  i) Aruithmetic Exception
+
+2) virutual						  ii) Arith metic exception 						
+3) out of memoery
+4) Thread death						* Unchecked exception              * Checked Exception  Manditory
+
+
+
+
+1. Checked Exceptions (Compile-Time Exceptions)
+✅ Checked at compile-time → The compiler forces you to handle them using try-catch or throws.
+✅ These exceptions occur due to external factors like file handling, database access, or network issues.
+✅ They extend the Exception class but NOT RuntimeException.
+
+
+IOException (File not found, read/write errors)
+SQLException (Database access errors)
+InterruptedException (Thread interruptions)
+ClassNotFoundException (Trying to load a missing class)
+
+
+
+✅ Not checked at compile-time → The compiler doesn’t force you to handle them.
+✅ These occur due to programming logic errors, such as invalid input or incorrect calculations.
+✅ They extend the RuntimeException class.
+
+
+
+Feature	Checked Exception	Unchecked Exception
+Checked at	Compile-time	Runtime
+Extends	Exception (but NOT RuntimeException)	RuntimeException
+Compiler Forces Handling?	Yes (try-catch or throws)	No, but handling is recommended
+Common Causes	File handling, DB access, missing classes	Logical errors, invalid inputs
+Examples	IOException, SQLException, ClassNotFoundException	NullPointerException, ArrayIndexOutOfBoundsException, ArithmeticException
+
+
+
+
+throw  keyword is used to throw the exception  
+throw new ArithmeticException("Not eligible to vote"); 
+
+✔ throw is used to manually throw exceptions.
+✔ It works inside methods or blocks of code.
+✔ Should be followed by an instance of an exception (throw new ExceptionType("message")).

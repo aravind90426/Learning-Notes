@@ -1,0 +1,522 @@
+Spring Security
+
+
+Authentication and Authorization
+
+
+1. Authentication ("Who are you?")
+
+      ->Authentication is the process of verifying a user's identity.
+     ->It ensures that the person or system trying to access a resource is who they claim to be.
+      ->It is usually done using:	
+		Username & Password
+		OTP (One-Time Password)
+		Biometric data (Fingerprint, Face ID)
+		Social login (Google, Facebook)
+👉 Example: When you log in to a website with your username and password, the system checks if your credentials match those in the database.
+
+
+2. Authorization ("What are you allowed to do?")
+
+	->Authorization determines what actions a user is permitted to perform after authentication.
+	->It controls access to resources based on roles or permissions					.
+	->It is implemented using:
+		Role-based access control (RBAC) (e.g., Admin, User, Guest)
+		Access control lists (ACL)
+		Token-based permissions (JWT, OAuth)
+👉 Example: After logging in to a system, an admin might have access to user management, but a regular user can only view their profile.
+
+Ke
+
+Authentication = Showing your ID card to enter a building.
+Authorization = Being allowed to enter specific rooms inside the building based on your role.
+
+
+
+
+
+
+
+
+
+
+   Session
+
+                    login/hello
+
+Clients     ------------------------->                server
+
+
+ 	 <-----------------------------
+
+                Session Id
+
+
+
+1️⃣ Client Sends a Request (No Session Yet)
+
+		
+2️⃣ Server Creates a New Session
+	The server checks if the request has a JSESSIONID cookie.
+	If no session ID is found, the server:
+		Creates a new HttpSession (request.getSession(true))
+		Generates a unique Session ID (e.g., ABC123XYZ)
+		Stores the session on the server (in memory or database).
+
+3️⃣ Server Sends the Session ID in the Response
+	The server sends a Set-Cookie header with the session ID:
+        The client (browser) stores this session ID in cookies.
+
+
+4️⃣ Client Sends Session ID in Future Requests
+	Next time the client sends a request, it includes the session ID in the Cookie header
+        The server reads the session ID and retrieves user data.
+
+5️⃣ Server Recognizes the User and Responds
+
+            Since the session ID is valid, the server identifies the user and responds with the requested data.
+
+
+
+
+🍪 What is a Cookie?
+A cookie is a small piece of data that a server sends to a client's browser. The browser stores it and sends it back with future requests to the same server.
+
+Cookies are mainly used for session management, authentication, tracking user preferences, and personalization.
+___________________________________________________________________________________________________________________________________________________
+
+                                               server
+
+
+client ------------------>       f1
+				|
+  				f2             dispactch servelet ----->s1
+ 				|
+ 				f3					s2...
+				|
+ 				f4
+
+
+
+
+   spring give default filter for configuration
+
+
+
+Explanation of the Flow:
+1️⃣ Client Sends Request
+
+	A user (browser/Postman) sends a request (e.g., GET /api/hello).
+
+
+2️⃣ Spring Security Intercepts Request (Servlet Filters)
+
+	The request first goes through Spring Security’s filter chain (DelegatingFilterProxy).
+	Filters like BasicAuthenticationFilter check if the user is authenticated.
+
+
+3️⃣ Authentication and Authorization Checks
+
+	If authentication is required, it checks with AuthenticationManager and UserDetailsService.
+	if authorization is needed, it verifies roles/permissions.
+
+4️⃣ Request Proceeds to DispatcherServlet
+
+	If authentication and authorization pass, the request reaches Spring MVC’s DispatcherServlet, which calls the controller.
+
+5️⃣ Response is Sent Back to Client
+
+	The controller processes the request and returns a response, which passes back through Spring Security and is sent to the client.
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+Task 1)   Try hello world program - it shows login page default  
+
+     -> pass word is generated ans show  in intelij
+
+
+  for logout
+
+
+
+http://localhost:8080/logout
+
+
+
+
+    it follows above standard   if you want session id
+
+
+
+code :
+
+
+@RestController
+public class Controller {
+    @GetMapping("/")
+    public String index(HttpServletRequest req)
+    {
+        return "Hello world  "  + req.getSession().getId();
+    }
+}
+
+
+___________________________________________________________________________________________________________________
+
+
+if you want set password 
+
+   this type can allow only one user . multiple user can learn in future
+
+
+-> resources / application properties
+
+
+
+spring.security.user.name = aravind
+spring.security.user.password = 123
+
+
+
+
+
+
+Note:
+
+owaps  Top 10            -- helps to find which are the attack possible to our self
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+CSRF (Cross Site Request  Forfery)  - Security filter chain
+
+
+					Sever			
+				_______________________________________
+				|
+				|				c1
+				|    f1
+				|
+client -------------------->    |     f2               fc        c2
+				|
+				|
+                                |    f3                          c3
+				|
+				_________________________________________
+
+
+
+fc - front controller- dispatchservler
+_c1 -c2-c3  - controller sevice repository
+
+
+f1-f2-f3    are filter
+
+
+
+one of the filter --  CSRF
+______________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+                  req
+      client --------------> server
+
+            <----------------
+
+
+     sessionId                                 
+
+
+
+
+attacker sent the link some one access that the session id can got by attacker -> thy use anything
+
+ -> avoid this we use CRSF
+
+-> default ta csrf assign
+
+
+
+
+
+Speing Security
+______________
+
+http
+
+   -> get
+   
+   -> post         |
+                   |    
+    -> put         |
+		   |   --->  Critical method csrf enabled
+    -> Delete      |
+
+
+
+
+
+
+package com.example.springSecurity.controller;
+
+import com.example.springSecurity.model.Student;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@RestController
+public class StudentController {
+
+    List<Student> list = new ArrayList<>(Arrays.asList(new Student(1,"aravind","CT"),
+            new Student(2,"sarjun","AI"),
+            new Student(3,"arun","CY")
+            ));
+
+    @GetMapping("students")
+    public List<Student> getStudents()
+    {
+        return list;
+    }
+
+    @PostMapping("students")
+    public String addStudent(@RequestBody Student student)
+    {
+        list.add(student);
+        return "Added";
+    }
+
+     @GetMapping("csrf")
+    public CsrfToken getCsrfToken(HttpServletRequest request)
+    {
+        return (CsrfToken) request.getAttribute("_csrf");
+    }
+
+
+}
+
+
+
+
+  namma naala direct ta anupa mudiyaathu so we need crsf token and put header in post req
+
+
+
+
+
+______________________________________________________________________________________________________________________________________________________
+
+Manual Configuration  tell string to stop
+
+
+
+// these helps to hei spring u stop default security i can manually take for that.
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+
+    // we configure SecurtyFilture
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.build();//   give security filtre chain option
+    }
+}
+
+
+mrun without loggin page
+
+
+
+
+_____________________________________________________________________________________________________________________________________
+
+
+
+  1. CSRF Disable
+
+		Same site Strict
+		Session Stateless
+
+  //prerequest functionl Interface and Lambda expression
+
+
+    http.csrf(customizer -> customizer.disable());   // disable csrf
+
+
+
+resources means 
+
+localhost:8080/
+localhost:8080/students
+
+ theses all are we can switch resources simentansuoly cookies can share .
+but payment ku cookies share aava koodathu so we use Same site Strict
+
+go app properites
+
+add this
+
+//**
+  server.servlet.session.cookie.same-site=strict
+//
+
+it helps to other outside resources ku csrf anupaathu . it helps to avoid csrf attck
+
+
+//**
+http.authorizeHttpRequests(request-> request.anyRequest().authenticated());// it helps to witthout login no one can permit 
+
+
+
+
+package com.example.springSecurity.configuration;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+
+
+// these helps to hei spring u stop default security i can manually take for that.
+
+
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+
+    // we configure SecurtyFilture
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.csrf(customizer -> customizer.disable());   // disable csrf
+        http.authorizeHttpRequests(request-> request.anyRequest().authenticated());// it helps to witthout login no one can permit
+        http.formLogin(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults());   // it helps to other client like postman to acesss
+
+        //stateless - oru oru time mu new session id generate pannum
+        http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();//   give security filtre chain option
+    }
+}
+
+but we have a problem it shows every refresh login.
+in the case we avoid 
+http.formLogin(Customizer.withDefaults());
+  remove that . 
+
+
+
+
+______________________________________________________________________________________
+
+Multiple User in Spring Boot
+
+
+
+ user la verify panna we use UserDetailsService - Interface
+
+ InMemoryUserDetailManager  class  gives object for the interface
+
+the class Con structor needs  UserDetail
+
+UserDetail needs User
+
+
+
+
+package com.example.springSecurity.configuration;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
+
+
+// these helps to hei spring u stop default security i can manually take for that.
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+
+    // we configure SecurtyFilture
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.csrf(customizer -> customizer.disable());   // disable csrf
+        http.authorizeHttpRequests(request-> request.anyRequest().authenticated());// it helps to witthout login no one can permit
+        //http.formLogin(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults());   // it helps to other client like postman to acesss
+
+        //stateless - oru oru time mu new session id generate pannum
+        http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();//   give security filtre chain option
+    }
+
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+
+        UserDetails user1 = User.withDefaultPasswordEncoder()
+                .username("arun")
+                .password("1234")
+                .roles("ADMIN")
+                .build();
+
+        UserDetails user2 = User.withDefaultPasswordEncoder()
+                .username("vijay")
+                .password("1234")
+                .roles("ADMIN")
+                .build();
+
+        UserDetails user3 = User.withDefaultPasswordEncoder()
+                .username("hari")
+                .password("1234")
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1,user2,user3); //varagas
+    }
+}
+
+
+
+in configuration class
+
+______________________________________________________________________________________________________________________
+

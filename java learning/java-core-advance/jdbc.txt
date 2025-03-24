@@ -1,0 +1,102 @@
+
+
+JDBC 
+
+ 
+     java               _______                   [] Db
+                          C                           
+     frontend
+
+
+we have 4 diff drivers . 
+
+   1) JDBC-ODBC Bridge Driver (Type 1)
+   2) Native-API Driver (Type 2)
+   3) Network Protocol Driver (Type 3)
+   4) Thin Driver (Type 4) – Pure Java Driver
+
+connect java to jdbc  (7 steps)
+
+1)    import the package.       (phone)
+
+              -  java.sql.*              
+
+2)    load & register                                           (sim card & network)
+
+          a) load-                   (com.mysl.driver)    library name = MySQL connectoer
+
+                                                 download it
+
+
+            b)register          ---class.  forName("com.mysql.jdbc.Driver)
+						
+	     ->forName is the method used for load the driver	
+
+            its belong to class				
+   
+
+
+
+3)    establishing the connection   				(dial the number) and call
+
+                        - Connection interface
+
+4)    creating the statement         (result out or not)
+
+                   three types
+                      -> statement                - execute query
+                      -> prepared Statement        - predefined query
+                     -> Callable Statement         - Pl execution
+ 
+
+5)    execute the query              speak that
+
+6)    Proccess result                yes or not
+
+7)    close                          end
+
+______________________________________________________________________
+
+1) import   java.sql.*;
+        
+    main()
+{
+
+  2)  class.  forName("com.mysql.jdbc.Driver)
+
+  3)  Connection con  = DriverManager.getConnection( " URL:," UN", "PassWord");
+                                      |
+                                     static method
+
+  4) StateMent st = con. createStatement;
+
+  5) ResultsSet    = st.executeQuery("Select * from Student");
+      \ 
+     Interface
+
+
+  6)     rs.next() - switch to next row and   tell isAvailable or not
+
+
+       rs.getInt(1)   1- means first colom
+
+    
+
+   while(rs.next())
+   {
+      sout(rs.get(Int(1) +" " +  rs.get(String(2));
+   }
+
+
+
+7)  st.close();
+    con.close();
+
+
+
+
+
+
+
+
+  

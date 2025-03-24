@@ -1,0 +1,1578 @@
+SPRING
+
+
+ it is a framework  used to develop enterprice application . 
+
+ Dependency Injection - Inversion of control 
+
+  -> object creation are fully managed by  spring
+ -> loosely coupled app develop panna use pannuvom
+
+->  It provides features like dependency injection (IoC), aspect-oriented programming (AOP), and transaction management,
+
+Dependency Injection (DI) provides Inversion of Control (IoC) by handling object creation and dependency management instead of the programmer manually instantiating objects.
+
+
+spring can be integrate wit other projct laike Hibernate
+
+
+Spting boot 
+ -> conversion over configuration             (spring la lot of configuration pannanum and spring boot la configuration ku time spend panna theva illa 
+
+  -> Embeded Server                     (spring uses a tomcat web server
+
+  -> spring oda project tha spring boot
+ 
+  -> APi can be built in minutes
+
+  
+->  less/zero    COnfiguration
+
+   " hello world"
+
+ standalone app   - which means it shows output in ide  console
+
+  
+
+          SPRinG Boot
+         _________________
+
+           spring           ( spring tha bottom layer)
+
+
+
+________________________________________________________________________________
+
+
+IOC and DI
+
+  IOC is the priciple or concept. DI follows the IOC and cretes object by spring automatically not be a programmer.
+
+  u just provide what are the class needs iobject.
+
+
+
+   JVM  (heap)
+uu
+________________________________________________
+|    *-> normal obj man made			|
+|____________________________________________	|
+| |               IOC CONTAiner              |	|
+| |					     |	|
+| |	* * *  Strudent()	             |	|
+| |					     |	|
+| |__________________________________________|	|
+| ______________________________________________|
+
+Spring manage pannucha IOC container la tha store pannum.
+
+y because we focus on Business logic
+
+
+@Autowirring
+Student s ----> it will cerate obj
+
+
+Injcting the dependency classified into three types.
+
+1) Field injection.
+2) Construction
+3) Setter
+
+
+
+
+ Client   -------->        server
+			     |
+ 			     V
+                         contains three layer
+
+                    |            |                |              i->    db
+                 COntroller     Service         repo-------------
+                
+     both all are class                          which is used for when we need database
+
+
+
+controller  - accept the client request 
+
+service - business logic
+
+repository - dtabase
+
+---------------------------------------------------------------------------------
+
+3/4/2025
+
+ we create simple project using spring->  we create maven project.
+
+______________________heap ______________________
+|           					|
+| ___________________________________________	|
+| |               IOC CONTAiner              |	|
+| |					     |	|--->  ioc container we also called Application Context
+| |__________________________________________|	|
+|___________________ m____________________________|
+
+ 
+->  first we create a ioc container  in  that we pass in the constructor an xml file -> these file helps to handle bean               bean = object
+
+int hat xml file u should mention that we creating a obj;
+
+
+-> xml la tha naama entha class kula obj create pannuvonu solluvom
+
+->  inside the ioc beans are said to be managed bean;
+
+ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+
+
+ ->intha line tha ioc container ra create pannum 
+ -> bean.xml la enna enna file enna enna object bean la irukko athuula mattum tha object irukkum
+
+-> its like
+
+<bean id="st1" class="bean">
+</bean>
+intiually ella object tiyu create pannum
+
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+       ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+
+     Student s1 = (Student) context.getBean("st1");
+        s1.show();
+    }
+}
+
+
+
+xml config
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+    <bean id="st1" class="org.example.Student">
+
+    </bean>
+    <bean id="st2" class="org.example.Student">
+
+    </bean>
+</beans>
+
+
+
+     Student s1 = (Student) context.getBean("st1");   // which is used to get bean from the ioc container
+        s1.show();
+
+
+_____________________________________________________________________________
+Di is classified into 3 types of injection.
+
+1) Field injection.  - we will study in spring boot
+2) Construction
+3) Setter
+
+_________________________________________________
+
+Setter injection  - using seter method
+
+
+
+<bean id="st1" class="org.example.Student">
+        <property name="age" value="20"></property>
+    </bean>
+
+   -> property tag can be used for initialize the property 
+   -> it calling the setter method
+
+_____________________________________________________________________________
+
+    creating obj for reference type
+
+
+Task is to create property as object type
+
+
+java code
+
+public class Student {
+
+    private int age;
+     private Pen pen ;
+
+    public void setPen(Pen pen) {   - values or given by xml property
+        this.pen = pen;
+    }
+
+        public void write()
+    {
+        pen.wirte();
+    }
+
+   }
+
+
+
+xml code
+
+<bean id="st1" class="org.example.Student">
+        <property name="age" value="20"></property>
+        <property name="pen" ref="p1"></property>   - we use Studen class Propenty as Pen type
+   </bean>
+    <bean id="p1" class="org.example.Pen">     - it refes to o1 object is created
+
+    </bean>	  
+
+
+
+__________________________________________________________________________________________
+
+
+Losse coupling
+
+-> it can be achive by interface
+
+
+example  if an Interface called Writer
+                                 
+
+   -> if pen is connected to the writer // we can write using Pen 
+    -> if pencil is connected to the writer // we can write using pencil
+
+
+code 
+
+
+Public class Student {
+
+    private int age;
+     private Writer wt ;
+
+
+    public void setWt(Writer wt) {
+        this.wt = wt;
+    }
+
+    public void write()
+    {
+        wt.write();
+    }
+
+}
+
+Writer Inteface
+
+public interface Writer {
+    void write();
+}
+
+
+Pen class
+public class Pen implements Writer {
+
+    @Override
+    public void write()
+    {
+        System.out.println("Iam writing using Pen");
+    }
+}
+
+
+
+
+xml confiq
+
+
+    <bean id="st1" class="org.example.Student">
+
+        <property name="wt" ref="sk"></property>
+    </bean>
+
+    <bean id="p1" class="org.example.Pen">
+
+    </bean>
+    <bean id="pc" class="org.example.Pencil">
+
+    </bean>
+    <bean id="sk" class="org.example.Sketch">
+
+    </bean>
+
+_________________________________________________________________________________________
+
+
+Autowiring in setter method
+
+
+
+wiring
+-------
+
+<bean id="st1" class="org.example.Student">
+
+        <property name="wt" ref="sk"></property>  --> wiring  wt property connect to sk class object
+    </bean>
+__________________________________________________________________________________
+Autowiring 
+
+  Two types
+     -> byName
+     -> byType
+
+
+ByName
+---------
+
+
+<bean id="st1" class="org.example.Student" autowire="byName">
+
+</bean>
+
+ bean id="wt" class="org.example.Pen">
+
+</bean>
+
+
+it can be automatically  wired 
+  
+          with property name == id for ref in xml
+ 
+  
+    wt - property name in Writer Interface
+    
+
+  ref la enna name wt nu paakum  irukurathu dutrhu match pannirum
+
+
+---------------------------------------------------------------------
+
+
+byType
+______
+
+
+for one obj
+
+
+ <bean id="st1" class="org.example.Student" autowire="byType">
+
+ </bean>
+
+  <bean id="p1" class="org.example.Pen">
+
+ </bean>
+
+
+ippo property type oda entha ref match aavutho atha connect pannum
+
+ Writer wt  ithu tha property athuku equal entha ref iruko atha connect mattum
+
+
+
+
+
+
+
+multiple ref same property type pa iruntha    error varum
+
+so
+
+we use primary
+
+
+ <bean id="st1" class="org.example.Student" autowire="byType">
+
+<!--        <property name="wt" ref="wt"></property>-->
+    </bean>
+
+    <bean id="p1" class="org.example.Pen" primary="true">
+
+    </bean>
+    <bean id="pc" class="org.example.Pencil">
+
+    </bean>
+    <bean id="sk" class="org.example.Sketch">
+
+    </bean>
+
+
+
+
+________________________________________________________________________________________________________________________________
+
+
+
+Comstructor injection
+  \-> parameterized constructor is used.
+
+ we use constructor arg
+
+
+public class Student {
+
+    private int age;
+    private  int std;
+     private Writer wt ;
+
+    public Student() {
+
+    }
+
+    public Student(int age, int std, Writer wt) {
+        this.age = age;
+        this.std = std;
+        this.wt = wt;
+    }
+
+    public void write()
+    {
+        wt.write();
+    }
+
+
+}
+
+
+
+   
+bean.xml
+
+<beasns
+
+    <bean id="st1" class="org.example.Student" >
+        <constructor-arg index="0" value="20"></constructor-arg>
+        <constructor-arg index="1" value="10"></constructor-arg>
+        <constructor-arg index ="2" ref="p1"></constructor-arg>
+    </bean>
+
+    <bean id="p1" class="org.example.Pen" primary="true">
+
+    </bean>
+    <bean id="pc" class="org.example.Pencil">
+
+    </bean>
+    <bean id="sk" class="org.example.Sketch">
+
+    </bean>
+
+</beans>
+
+
+
+Autowiring 
+_________
+
+
+
+ 
+     
+ <bean id="st1" class="org.example.Student"  autowire="constructor"> 
+        <constructor-arg index="0" value="20"></constructor-arg>
+        <constructor-arg index="1" value="10"></constructor-arg>
+
+    </bean>
+
+    <bean id="p1" class="org.example.Pen" primary="true">  // automatically wired beacusse of primary
+
+    </bean>
+    <bean id="pc" class="org.example.Pencil">
+
+    </bean>
+    <bean id="sk" class="org.example.Sketch">
+
+    </bean>
+
+
+______________________________________________________________________________________________________________________________
+
+Project Lombock
+  
+   - we can use instend getter and setter method  we use Lomobok like  annotation
+
+example @Data - it can contails all methods as getter and setter method
+
+
+
+import jdk.jfr.DataAmount;
+import lombok.Data;
+
+@Data
+public class Student {
+    private int age;
+    private int name;
+}
+
+
+@Setter
+@Getter
+
+we can also use at particular field
+
+
+______________________________________________________________________________________________________--------
+
+
+Java-Based Confiquration in Spring
+
+
+  - instead xml we use java class for confiquration.
+
+  - ApplicationContext context = new AnnotationConfigApplicationContext(MyConfiq.class);
+
+
+
+
+Public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new AnnotationConfigApplicationContext(MyConfiq.class);
+        Student s1 = (Student)context.getBean("st1");
+        s1.greet();
+
+    }
+}
+
+
+we use instead Xml confiquration
+
+
+@Configuration
+public class MyConfiq {
+
+    @Bean(name ="st1")            // if u not give bean name we can use method name as bean name
+    public  Student student()
+    {
+        return new Student();
+    }
+
+
+}
+
+
+
+
+___________________________________________________________________________
+
+
+we have 
+
+    App class
+   Student class
+   Writer Interface
+   Pen class
+   Pencil class
+
+
+
+
+@Configuration
+public class MyConfiq {
+
+    @Bean(name ="st1")
+    public  Student student(Writer writer)     //  @autowired automatically
+    {
+         Student st = new Student();
+         st.setAge(20);                                  
+         st.setWrite(writer);     // no arg contructor and call st.setWriter(pen())  -> with out auto wiring
+
+        return st;
+    }
+
+    @Bean
+    @Primary
+    public Pen pen()
+    {
+        return  new Pen();
+
+    }
+
+    @Bean
+    public Pencil pencil()
+    {
+        return  new Pencil();
+    }
+}
+
+
+
+Que
+if two method as primary which it can be call ?
+
+
+
+
+
+@Configuration
+public class MyConfiq {
+
+    @Bean(name ="st1")
+    public  Student student(@Qualifier("pencil") Writer writer)
+    {
+         Student st = new Student();
+         st.setAge(20);
+         st.setWrite(writer);
+
+        return st;
+    }
+
+    @Bean
+    @Primary
+    public Pen pen()
+    {
+        return  new Pen();
+
+    }
+
+    @Bean
+    @Primary
+    public Pencil pencil()
+    {
+        return  new Pencil();
+    }
+}
+
+
+
+
+
+   ans:  we use @Qualifier("method name or name")
+
+Priority
+
+@Qualifier // highest priority
+@Primary   // next
+
+
+
+___________________________________________________________________________________________________________________________________________________ 
+
+
+Setterotype Annotaion  java-class Configuration
+
+__________________________________________________
+
+
+
+
+
+@Component - Spring’s IoC (Inversion of Control) container to automatically detect and register the class as a Bean.
+
+           - they Create object for that
+
+
+
+1)Field Injection
+______________________
+
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new AnnotationConfigApplicationContext(MyConfiq.class);
+        Student s1 = (Student)context.getBean(Student.class);
+        s1.write();
+
+    }
+}
+
+
+
+@Configuration
+@ComponentScan("org.example")    - ella componeny yu scan pannu which mean entha class ku la obj create pannanum nu sollum
+public class MyConfiq {
+
+}
+
+   
+
+@Component
+public class Student {
+    private int age;
+
+    @Autowired                                   --   helps to automatically wiried    wthu primary ya irukko atha connect pannum
+   @Qualifier("pencil")  -pencil la connect pannum
+    private Writer write;//  new pencil ()
+    public   Student(){
+        System.out.println("Student is created");
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Writer getWrite() {
+        return write;
+    }
+
+    public void setWrite(Writer write) {
+        this.write = write;
+    }
+
+    public  void write()
+    {
+        write.Write();
+    }
+}
+
+
+@Component
+@Primary
+public class Pen  implements  Writer{
+
+    @Override
+    public void Write() {
+        System.out.println("Writing using pen");
+    }
+}
+
+
+
+
+
+
+
+2) Setter injection
+
+
+package org.example;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Student {
+    
+    @Value("20")   // to assign values
+    private int age;
+    private Writer write;    public   Student(){
+        System.out.println("Student is created");
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Writer getWrite() {
+        return write;
+    }
+
+
+    @Autowired
+    @Qualifier("pencil")                              - setter Injectuion              
+    public void setWrite(Writer write) {
+        this.write = write;
+    }
+
+
+    public  void write()
+    {
+        write.Write();
+    }
+}
+
+
+3) Field Injection
+
+@Component
+public class Student {
+    @Value("20")
+    private int age;
+    private Writer write;//  new pencil ()
+
+    @Autowired
+    public   Student( @Qualifier("pencil") Writer write){                --- Field Injection 
+        this.write=write;
+
+    }
+     ....
+}
+
+
+
+
+______________________________________________________________________________________________________________________________________________________
+
+SPRING BOOT
+
+
+
+
+start.spring.io   -> download and inclueds what are the dependency we needs?
+
+java version -21
+ 
+spring version -3.9.3   
+
+ to download succesfull
+
+
+
+
+@Component - Spring manage pannikum  antha class sa   - ioc container la antha class oda object varum  
+
+
+first project in spring
+
+@SpringBootApplication
+public class FirstSpringBoot1Application {
+
+	public static void main(String[] args) {
+
+		ApplicationContext context =SpringApplication.run(FirstSpringBoot1Application.class, args);
+		Student s1 = context.getBean(Student.class);
+		s1.greet();
+	}
+
+}
+
+
+
+@Component
+public class Student {
+    public Student()
+    {
+        System.out.println("Student is created");
+    }
+    public void greet()
+    {
+        System.out.println("Iam, in Student");
+    }
+}
+
+
+
+_________________________________________________________________________________________________________________________________
+
+
+Scope in Spring and SpringBoot
+________________________________
+
+
+Two types
+
+   1) Singleton Scope
+   2) Prototype Scope
+
+
+
+
+Default ta Scope vanthu Singketon la tha irukku
+
+ - You creating multiple ref   but itall point to one object
+
+ - put @Scope("prototype")  in about the Class NAme
+
+ - check using == operator  // practice
+
+
+
+@Component
+@Scope("prototype")
+public class Student {
+    public int age;
+    public Student()
+    {
+        System.out.println("Student is created");
+    }
+}
+
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________
+
+
+
+
+DI  same as above
+
+
+ three types
+
+ 1) Field Injection
+ 2) Setter Injectoion
+  3) Constructor injection     - default @Autowired
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________
+
+
+Loose Couplingw    - achive by using Interface     eg) Studnt and Pen - Tightky coupled    and other as above
+
+@Primary
+@Qualifier("Class name with small Letter")
+
+Same as Above
+____________________________________________________________________________________________________________________________________________________________
+
+First Api Using Spri ng Boot
+
+    \
+    Restful API
+
+
+
+Api - Application Program Interface
+
+REST - Representation State Transfer
+
+
+						 Get,Post ,Put , Delete
+				 Http Request				
+Andriod            ___________    ------->     _____________   
+		  |         |                 |            |   i) Controller
+  Web             | client  |		      |  Server    |   ii)  Service
+Browser           |_________|		      |____________|   iii)  Repository
+Postman    
+			  <---------------
+                              Http response
+
+
+
+ Why we USe Spring Boot?
+
+   -> Less Confiquration
+   -> Embeded Server ( Tomcat)
+
+
+
+
+ Creating new Project 
+______________________
+
+    add Dependency  as  Spring web     NAme - FirstApi
+
+ then run   -it not stop 
+
+check  http://localhost:8080/    u get 404 Error
+
+
+
+-> @Controller kudutha file tha kudukanum nama data va mattum vechu run pandra naalawe Use @RestController
+
+
+
+->  check  http://localhost:8080/   ---> / kuduthatha home page 
+
+   so we use @GetMapping("/") - for home Page
+
+  vera method ku mela @GetMapping("about")  -  http://localhost:8080/about/
+
+
+code 
+
+
+@RestController
+public class HelloController {
+
+     @GetMapping("/")
+    public String greet() {
+        return "Hello World !!!";
+    }
+
+    @GetMapping("about")
+    public  String aboutUs()
+    {
+        return " Written By Aravind!!!";
+    }
+}
+
+
+i) we can learned controller - it is also a java class exmpale HelloController
+
+
+   - musltiple Controlle use palam  
+ 
+   - Beat Practice - using Controller
+
+
+lear http Satus code
+
+
+Series	Description
+1xx	Informational Responses
+2xx	Success Responses
+3xx	Redirection Responses
+4xx	Client Error Responses
+5xx	Server Error Responses
+
+
+🎯 Most Common HTTP Status Codes
+✅ 200 OK → Request succeeded
+✅ 201 Created → Resource successfully created
+✅ 301 Moved Permanently → Redirected permanently
+✅ 302 Found → Temporary redirect
+✅ 400 Bad Request → Client error (wrong input)
+✅ 401 Unauthorized → Authentication required
+✅ 403 Forbidden → Access denied
+✅ 404 Not Found → Requested resource doesn’t exist
+✅ 500 Internal Server Error → Unexpected server error
+
+
+
+
+
+
+
+
+		@RestController       @Sevice                   @Reposiory                  - itself have @Component
+
+			class		class			Interface
+			
+
+    client   ---->   Controller  -----> Service ----->   reposritary ----------------------> db
+			   ^ 	        |   ^	             |   ^			      |
+			   |------------|   |-----------------   |  ---------------------------
+
+
+Controller - Also called as Api layer
+           - Accptes the request
+           - it also a class 
+           - it wants not return directly any thing .  call Service layer
+
+
+_______________________________________________________________________________________________________________________________________
+
+
+Student CRUD
+--------------
+
+
+
+Http methods
+
+  Get     -    read
+  Post    -    Create
+  Put     -    Update
+  Delete  -    Delete
+
+
+Class Student      ------------   model ? entity
+{
+    int rno;
+    String name;
+    String technology;
+}
+
+
+Create new PRoject
+
+project NAme - StudentCRUD
+
+dependency
+   - web 
+    - lombock
+
+
+
+
+
+jacson libray - used to convert java obj to json
+
+
+
+
+  @GetMapping("students/{rno}")                         - also search specific rnoll 
+    public Student getStudentByRno(@PathVariable("rno") int rno)         - @PathVariable - is must
+    {
+        return studentService.getStudentByRno(rno);
+    }
+
+
+
+
+  @PostMapping("Students")  same value can be gicven by get and post
+
+     -> not give same name at another postMapping
+
+
+Post help to add data
+
+
+    @RequestBosy antha method la mention pannanum
+
+
+ adding using postman
+
+->Go to Body → Select raw → Choose JSON 
+
+it will add enter in json format
+
+
+
+
+
+package com.example.StudentCRUD.controller;
+
+import com.example.StudentCRUD.model.Student;
+import com.example.StudentCRUD.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+
+@RestController
+public class StudentController {
+
+    @Autowired
+    StudentService studentService;
+
+     @GetMapping("students")
+     public ArrayList<Student> allStudents()
+     {
+          return studentService.show();
+     }
+
+
+     // select specifc students in link
+    @GetMapping("students/{rno}")
+    public Student getStudentByRno(@PathVariable("rno") int rno)
+    {
+        return studentService.getStudentByRno(rno);
+    }
+
+
+    // Student add from the client
+     @PostMapping("students")
+    public void setStudent(@RequestBody Student student)
+    {
+        studentService.setStudent(student);
+    }
+
+    @PutMapping("students")
+    public String update(@RequestBody Student student){
+         return  studentService.update(student);
+    }
+
+
+    @DeleteMapping("students/{rno}")
+    public String delete(@PathVariable int rno){
+         return  studentService.delete(rno);
+    }
+
+}
+
+
+Studentservice.java
+
+
+
+
+package com.example.StudentCRUD.service;
+
+import com.example.StudentCRUD.model.Student;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+@Service
+public class StudentService {
+
+ ArrayList<Student> students = new ArrayList<>(Arrays.asList(
+         new Student(10,"Aravind","CT"),
+         new Student(20,"Divan","Ai"),
+         new Student(30,"Sanjeev","Spring")
+ ));
+
+    public ArrayList<Student> show() {
+        return students;
+    }
+
+    public Student getStudentByRno(int rno) {
+        for(int i=0;i<students.size();i++)
+        {
+            if(students.get(i).getAge()==rno)
+                return students.get(i);
+        }
+        return null;
+    }
+
+    public void setStudent(Student student) {
+        students.add(student);
+    }
+
+    public String update(Student student)
+    {
+        for(int i=0;i<students.size();i++)
+        {
+            if(students.get(i).getAge()==student.getAge()) {
+                students.set(i, student);
+                return "update successfully";
+
+            }
+
+        }
+        return "No such data left";
+    }
+
+    public String delete(int rno) {
+        for(int i=0;i<students.size();i++)
+        {
+            if(students.get(i).getAge()== rno) {
+                students.remove(students.get(i));
+                return "Deleted Successfully";
+
+            }
+
+        }
+        return "No such data found";
+    }
+}
+
+
+Student
+
+package com.example.StudentCRUD.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+  // Generates a no-args constructor (needed for JPA)
+public class Student {
+
+    private int age;
+    private String name;
+    private String technology;
+
+      public Student() {
+      }
+
+
+
+      public Student(int age , String name, String technology)
+    {
+        this.age=age;
+        this.name=name;
+        this.technology=technology;
+    }
+
+      public int getAge() {
+          return age;
+      }
+
+      public void setAge(int age) {
+          this.age = age;
+      }
+
+      public String getName() {
+          return name;
+      }
+
+      public void setName(String name) {
+          this.name = name;
+      }
+
+      public String getTechnology() {
+          return technology;
+      }
+
+      public void setTechnology(String technology) {
+          this.technology = technology;
+      }
+  }
+
+
+
+_______________________________________________________________________________________________
+
+
+
+Spring Data JPA
+_______________
+
+
+
+
+
+
+		@RestController       @Sevice                   @Reposiory                  - itself have @Component
+
+			class		class			Interface
+			
+
+    client   ---->   Controller  -----> Service ----->   reposritary ----------------------> db
+			   ^ 	        |   ^	             |   ^			      |
+			   |------------|   |-----------------   |  ---------------------------
+
+
+
+ Repositary- Interface tha create pannuvom    extends JPARepositary
+  
+
+
+ORM (object Relational Mapping)
+
+
+                                                               Student Table
+class Student{						       ______________________________
+ String name ;          ORM				      |   name  |   rollno    |  tch |
+ int rollno;         ------------------------------>          |------------------------------|
+String tch                                                    |                              |
+
+}
+
+
+
+ what is ORM 
+
+
+ORM is used to covert the object as Table (Relational)
+
+  ORM tool 
+    | 
+    |------ Hibernate    framework   --  we easily integrate with spring framework   |
+    |										     |
+    | 										     |
+    |------ SQLAchemy								     | -----> follows -------->Spring Data JPA                          |   |    									     |        implement 
+    |										     |
+    | 										     |
+    |------ entity framework							     |
+    |
+    | 
+    |------ eclipse link
+    |
+
+
+
+
+Spring JPA is a Spring project
+
+
+JPA  - Java Percistance Api     -    provide interface   - extends  Jpa Repositray
+
+
+
+________________________________________________________________________________________________________
+
+
+Repository Interface
+
+
+
+package com.example.JPADemo.repository;
+
+import com.example.JPADemo.model.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StudentRepository  extends JpaRepository<Student,Integer> {      ->  class name and their private kety type
+}
+
+
+Student serice cass
+package com.example.JPADemo.service;
+
+import com.example.JPADemo.model.Student;
+import com.example.JPADemo.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class StudentService {
+@Autowired
+ StudentRepository studentRepo;
+    public List<Student> getAll() {
+
+        return studentRepo.findAll();
+    }
+
+    public String setStudent(Student student) {
+        studentRepo.save(student);
+        return " added";
+    }
+
+    public Student getStudentByRno(int rno) {
+
+        return studentRepo.findById(rno).orElse(new Student());                // search panndra roll no illaa new student anupou
+    }
+
+
+    public String update(Student student) {
+        studentRepo.save(student);//                                   --->used for save and update  illana save pannu irunhuchuaa update pannum
+        return "updated successfully";
+    }
+
+    public String delete(int rno) {
+
+        studentRepo.deleteById(rno);
+        return "deleted";
+
+    }
+}
+
+
+__________________________________________________________________________________________________________________________________-
+
+
+
+    -> Declaring own methods 
+   ->  NAtive Query
+
+
+
+
+
+
+
+
+1) Declaring Own Methods
+____________________________
+
+
+  
+
+ Controller
+
+
+
+
+ //own method creation
+
+    @GetMapping("students/technology/{dept}")
+    public List<Student> findByTechnologyDept(@PathVariable String dept)
+    {
+        return studentService.getByDept(dept);
+    }
+
+
+// Service
+ 
+   public List<Student> getByDept(String dept) {
+
+        return  studentRepo.findByDept(dept);
+    }
+}
+
+
+
+// Repositary
+
+
+ List<Student> findByDept(String dept);   // findBy is must , it helps to hiberanate undersatand
+
+
+
+
+
+
+
+__________________________________________________________________________________________________________________________\
+
+
+Two options 
+
+
+ Native Query
+
+  	->Database(sql)
+        -> Table (relation)
+        -> Column Names
+
+
+JPQL
+
+   -> Object 
+   -> class atteibute
+
+
+
+
+Native Query
+
+
+ @Query(nativeQuery = true, value = "SELECT * FROM student WHERE age=:age AND dept=:dept")
+    List<Student> findByAgeAndDept(@Param("age") int age, @Param("dept") String dept);          -- ask from param
+
+
+
+controller
+
+@GetMapping("students/filter")
+    public List<Student> getAgeandDept(@Param("age") int age, @Param("dept") String dept){    // param means ask from param
+
+         return studentService.getAgeandDept(age,dept);
+    }
+
+
+
+
+_____________________________________________________________________________________________________________________________________________________
+
+
+Response Entity and Http Status Code
+__________________________________
+
+
+Controller
+  @GetMapping("students/{rno}")
+    public Student getStudentByRno(@PathVariable("rno") int rno)
+    {
+
+        return studentService.getStudentByRno(rno);
+    }
+
+Service
+
+public Student getStudentByRno(int rno) {
+
+        return studentRepo.findById(rno).orElse(new Student());
+    } 
+
+
+ ippo naama itha modify panna porom  ---  stastus code return aagara maathi....
+
+
+
+ @PostMapping("students")
+    public ResponseEntity<String> setStudent(@RequestBody Student student)
+    {
+
+        studentService.setStudent(student);
+        return new ResponseEntity<>("Created....",HttpStatus.CREATED);
+    }
+    // select specifc students in link
+    @GetMapping("students/{rno}")
+    public ResponseEntity<Student> getStudentByRno(@PathVariable("rno") int rno)
+    {
+
+        Student student= studentService.getStudentByRno(rno);
+        if(student==null)
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else
+            return new ResponseEntity<>(student,HttpStatus.OK);
+    }
+
+
+
+
+ithunaala status code dispay aagum
+

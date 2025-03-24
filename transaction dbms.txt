@@ -1,0 +1,116 @@
+transaction
+------------
+
+    its means transfer the data   access and   modified the content in data base
+
+
+operation of transaction
+-----------------------
+
+   * read
+   * Write
+   * Commit
+   * rollback
+
+read
+-----
+   -> it is used to read the value and stores in the buffer in main memory
+
+write
+------
+  -> it can be used to write the data back from the buffer
+
+commit
+------
+  -> save the workdone data permanently
+
+rollback
+--------
+  -> it is used to undo the work done.
+    
+	save point
+            -> it can be used to save the data temporarly
+
+properties of Transaction
+-------------------------
+
+	* Atomacity
+	* Consitency
+	* Isolation
+	* Durability
+
+
+atomacity
+---------
+    -> all operation of transaction are performed
+              or
+       no one operation are not performed(completly not touch)
+
+    -> it has two operation
+		* abort - if the transaction is partially stopped when the half exectuted is hide
+
+                *commit - the datas are permanently stored in the database.
+
+consiteny
+---------
+	     check the correctness the data will be before and after transaction (300+400=700 before   send 100 after->  200+500 =700
+
+isolation
+---------
+   ->  one data va ore time la rendu per use panna mudiyaathu      multiple transaction are interference at a 
+    
+    -> it can be used for the inconsitency will not come.
+
+DUrability
+----------  
+     tranction will be fully completed and stored permanently in database.
+     -> if the transaction will be failed . the data will be stored consitency
+
+
+transaction states
+
+1 - active state    
+2 - partially commited
+3 - committed state
+4 - failed state
+5 - aborted state
+
+
+active state
+   ->it is the first state. the transaction will be start exectuded from it
+    -> if it has come failed then go to the failed state.
+    -> else it is correct then go to the partially corrected state. 
+
+partially commited
+    ->all read and write executed. changes can be stored in local buffer
+    ->if the changes are made perfanent on the data base it will be go to commited stated
+    ->else it eill be failed then go to the failed state.
+
+commited state 
+   all the operation are completely done and stored permanently in database then the data will be come commited state.
+
+failed state 
+  the data will be store permanently to database if it has fails then it will be come failed state
+
+aborted state
+    -> failed transaction state will be come to the aborted state.
+     ->aboreted state transaction la local buffer enna enna change pannucho  that all are roll back so data will be consistence. 
+
+
+tranction sheduke
+  serial Schedule  - one by one process of transaction. it takes more time
+  non-serial Schedule -  
+
+recovery technique
+-> roll back or undo
+-> commit or redo
+
+serializability
+   non serial Schedule covert into serial Schedule.
+    non serial Schedule
+
+normalization
+
+      database la irukkura data viyum attributes siyum organize panndrathutha normailization
+      it reduce the data redundancy (help for data will not repeat)
+ 	it is a process of organizing the data in database to avoid the  redundancy 

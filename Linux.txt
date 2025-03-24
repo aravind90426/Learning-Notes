@@ -1,0 +1,187 @@
+Linux
+
+
+ Uses Of Linux 
+-----------------
+
+
+1) Tv
+2) Video game consoles
+3) smart phones
+4) Home appliances
+
+
+
+what is Linux  ?
+----------------
+
+
+ -> it is an os like windows, mac
+
+ -> linux acts as a intermediate user and  hardware
+
+
+
+unix ?
+-----
+
+
+1970  - BEllLAbs   - created one os -> Unix   developed by sun microsystem  .
+
+   
+
+
+   Unix had created  they want these two features
+
+   1) multi user    - multiple user run one os
+   
+   2) multi tasking   - mulitiple task running simentanuosly
+
+  unix - solaria, AIx, HP-UX
+
+
+1991   - developed by linus torralds
+
+
+      -> Linux is oPen source software    (free - modify)
+
+Linux used by
+
+     1) developer community
+    
+     2) companies ( redhat, Debian,Centos)
+
+
+
+  -> unix suppoets fewer file system
+
+
+ -> Linux used by 
+
+           Atm machines , Smart phones , Home ppliances
+
+
+
+
+
+Virtual Box    by Oracle Corpsa
+_______________________________
+
+    -> Free
+   
+    -> Open source
+
+    -> supports Intel & AMD Computers
+
+
+why  we need it?
+
+     it have hpervaissour software .
+
+          -> it runs  multiple os in one Hardware
+
+
+_______________________
+|		      |
+|		      |
+|window 7, ubonto,mac |
+|---------------------|
+|   | virtual Box|    |
+|---------------------|
+|    windows 10	      |
+|_____________________|
+
+
+for learning os we can install Virtual Box  - and insert Linux
+
+intalled oracle virtual mangaer
+
+
+
+Creating First Virtual machine
+-----------------------------
+
+
+   ->  In that software we download virtual machine
+
+    Virutual machine?
+
+        - imaginary computer
+
+        - no need for physical hardware . it have in  viruatual hardware software
+
+       - it like a computer in a computer
+
+
+
+
+Different ways to Install OS
+
+   -> cd / DvD Drive.
+   -> ISO
+   -> Network Boot
+
+
+
+Installing centos
+------------------
+
+
+   Centos 7   - nearly $Gb
+
+------------------------
+-> agAn create vm and include the os
+
+-GUI option
+
+
+
+
+Commands
+
+________________
+
+
+
+1)   ls      - list in trheat foldersa and file in that directory
+
+2)  pwd    - show  where is our current folder
+
+3) mkdir name   - create folder
+
+4) rm name     - remove  file
+
+5) rm -rf name  - remove entire  current folder - recursively force
+
+6) cd name    - go inside
+
+7) touch name.txt   - create file
+
+8) vi name.txt    - create and open / open if existt
+
+      teo mode
+
+        - insert mode
+ 
+            type inside
+
+  ecs + ; + s    - tosave
+
+      q!  - to quite 
+
+
+9) cp  source dest     - copy
+
+10) mv temp.txt ../     move
+
+11) ls .name.txt     - create hiden file
+
+12) ls -a             - show hidden file
+
+
+
+
+
+
+
+

@@ -1,0 +1,190 @@
+NETWORK
+
+
+
+COMPUTER - Common  Oriented Machine particularly used for Trading ,education and Research.
+
+
+
+
+
+Network - computer connected together that is Network 
+
+Internetwork - Collecton of these computer Network
+
+
+eg) my computer connected to my sis computer, my sis cmpter connected to her sis...
+
+  the computers are connected to wifi. this connection are connected to computers 
+
+ the entire cities connected to city, state  .
+
+--> the entire connection on the global scope is known as Internet
+
+
+
+
+eg
+
+     *----> *    --------------->     *---> * --->*
+                                      |           |
+                                      |           |
+                                      *---> * --->*----*----*---*......
+
+  network                              internetwork
+
+
+
+How did it start?
+
+
+  ->  There is a cold war between us and soviet Union. who was lauching the  stellite first
+us want also soviet union wants   .because their names speeks in history. 
+ 
+-> then soviet union launched the first satellite in  1957
+
+-> but us wonts we never miss out further oppurtunities. we want to be the first go to moon or other than that,  we want to be that first this or that
+
+-> us government we want to be fisrt and created the ARPA program
+
+( ADVANCED RESEARCH PROGRAM AGENCY) 
+
+-> Arpa they have buildings in various area in us . but they want communicate  there is so far for each other. 
+
+so they developed some thing called arpa net 
+
+-> the have  in four places 
+
+
+1st)  MIT 
+
+2nd)  STAnford
+
+3)    VCLA
+
+4) Utah
+
+
+they want communicate are send some files are what ever
+
+-> they used TCP
+
+after that more places were added more computer are added in arpa NEt 
+
+then they indroduced IP
+
+protocols 
+
+- > set of rules  or procedure that must  be follow
+
+eg ) if u send a message to your friend -  it  have same protocols
+
+as this as research project . they send research paper 
+
+
+
+   the research paper contains link  . that link denotes another paper
+   _______________      _____
+   |		 |      |    |
+   |    link      |---> |    |
+   |_____________|	|____|
+
+
+ ->this automted sharing was missing  which means the link of another page was missed
+
+_______________________________
+
+ -> www was introduced by Tim Berners-Lee
+
+www is an project they basically stored this document
+
+when documents and other web resources are identified by Uniform resource Locator (uRLs)
+
+which may be interlinked by hyper links and are accessible by internet .  the are publised by web server  (cover Later)
+
+worlds - firt website   https://info.cern.ch/
+
+there is no search engines.
+
+
+
+
+why we need protocols ?
+
+ step by step process
+
+ the rules are  created by  the internet society who is responsible for  all this thinhgs
+
+
+
+
+
+
+
+__________________________________________________________________________________________
+
+
+Client - Server Architecture.
+
+
+
+        _____________				_________________
+       |	     |				|		|
+       |	     |	--------> req		|		|
+       |	     |	res<-----		|		|
+       |_____________|				|_______________|
+
+
+       client					    Server
+
+
+www.google.com    browerser do lot off steps and return new page
+
+_______________________________________________________________________________________________________________________________________________
+
+
+  Protocls
+
+TCP , UDP , HTTP       \
+
+TCP - 100% data want
+
+UDP - video call (not need full dta)
+
+HTPP  - used by browser
+
+__________________________________________________________________________________________________________________________________________
+
+
+How data is Transferd ?
+
+
+	
+
+					ISP
+					/
+				 ______/       (global - IP add)
+				|
+                               Modem/router
+				/|\
+	               ________/ | \_________
+                      /   |    |     |     |
+                    d1   d2    d3    d4   d5        
+
+
+  if you sends any request  we using wifi
+
+     📱 (Your Phone/Laptop) → 📶 (Router) → 🏢 (ISP Data Center) → 🌍 (Internet / Website Server)
+
+if you using mobile 
+
+    📱 (Your Phone) → 📡 (BTS - Cell Tower) → 🏢 (ISP Data Center) → 🌍 (Internet / Website Server)   and getting req back
+
+
+ ->each have ip connecected shows unique identifier.
+->  if u on the mobile data each time u can connect with BTS with unique Ip generate at gthe time
+
+-> if u can change place  new ip will generated at diff BTS  by ISP
+
+
+

@@ -1,0 +1,360 @@
+Strings
+----------------------
+
+String is a collection of Characters.
+
+String Declaratiom
+_-----------------
+
+  String name = "Aravind Murugesan";
+   
+  System.out.println(name);
+
+
+internal working
+-----------------
+
+     String      name          =           "Aravind Murugesan";
+     ------      ----                      --------------------
+         |        |                              |
+         V        --> reference                  V
+    Datatype          variable                  object
+
+
+
+    1)  String is a class of java.
+    
+ ---------------------------------------------------------------------A
+
+  String a=  "Aravind";
+  String b = "Aravind";
+
+ Which one is correct?
+                             __________________              |                                 _______________
+ |     a ----|--------------/---               \             |      |           |             /               \
+ |           |             /   __|______        \            |      |    a------|------------/--> Aravind      \
+ |     b ----| ------     /   |  V      |        \           |      |           |           /                   \
+ |           |       |---/--->| Aravind |         \          |      |    b------|----------/-----> Aravind       \
+ -------------          /                          \         |      -------------         /                       \
+
+
+ 2 Concepts
+-----------
+ 
+1 ->  String pool
+
+2 ->   immutablility
+
+                     
+
+Answer
+
+                             __________________             
+ |     a ----|--------------/---String pool    \             
+ |           |             /   __|______        \            
+ |     b ----| ------     /   |  V      |        \           
+ |           |       |---/--->| Aravind |         \          
+ -------------          /                          \         
+
+
+  -> String pool is a seperate memory Structure inside the heap. 
+
+  -> which can be used all the similar values of Syring which can be recreated in the pool. it can be used make the program optimization.
+ 
+   -> it is immutablity. you cannot modify or change  the object.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+   String a = "Apple";
+   
+   System.out.println(a);
+
+   a = "ball";
+
+   System.out.println(a);
+
+
+
+  output
+---------
+
+   Apple
+
+   ball
+
+
+
+                             __________________             
+ |           |              /   String pool    \             
+ |           |             /   __|______        \            
+ |     a ----| ------     /   | Apple   |        \           
+ |           |       |---/--->| ball    |         \          
+ -------------          /                          \         
+
+
+  -> it will be notr change the object . it will creating a new object.
+
+  -> Apple was removed by garbage collector.
+
+
+
+  *) For Security reason Strings are immutable.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+comparison of Strings
+----------------------
+
+1)  == 
+
+ 
+
+
+   a ----------->  aravind
+
+   b------------>  aravind
+
+   a== b    it will give false
+
+
+   a-----------------|
+		     |---> aravind
+   b-----------------|
+  
+       a==b   it will give true
+
+
+
+// how to create different object of same variable ?
+_____________________________________________________
+
+
+String a= new String("Aravind");
+String b= new String("Aravind");
+   
+ // creating this values outside the pool  but in heap.
+
+
+                              __________________             
+ |     a ----|-----------|   /   String pool    \             
+ |           |           |  /   __|______        \            
+ |     b ----| ------    | /   |         |        \           
+ |           |      |    |/    |_________|         \          
+ |           |      |    /-----Aravind              \  
+ -------------      |---------> Aravind     
+
+  a== b   // false
+
+
+-> when you need to check value u can use == method
+
+
+
+String a= new String("Aravind");
+String b= new String("Aravind");
+System.out.println(a==b);                                        // false;
+
+System.out.println(a.equals(b));                                //  true
+
+.equals()
+==========
+
+   it will checks only values 
+
+
+String a= new String("Aravind");
+String b= "Aravind";
+System.out.println(a.equals(b));                                 //true
+System.out.println(a==b);                                        // false;
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Preety printing in java
+------------------------
+float f = 22.127f;
+
+System.out.printf(" %.2f",f);         //22.13
+
+format specifier are lot of available refer google.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    System.out.println('a'+'b');              //195
+    System.out.println('a'+3);                // 100
+    System.out.println((char)('a'+'b'));      // Ã
+    System.out.println("a"+'b');              //ab
+    System.out.println('a'+"b");               //ab
+    System.out.println(1+'a');                //98
+
+
+   System.out.println("a"+1);                //a1
+
+// this is same as  after a few steps : "a" + "1"
+
+// Integer will converted into integer that will call tostring.
+
+System.out.println("arav" + new ArrayList<>());         //arav[]
+System.out.println("a"+ new Integer(36));               //a36
+System.out.println(new ArrayList<>()+ new Integer(36));      // error 
+System.out.println(new ArrayList<>()+ " " + new Integer(36)); 
+
+System.out.println("a"+"b");             "a" + "b"     -> it will create new object.
+                                             |
+                                             V
+                                             ab
+ -> if one of the data type is String the  answer should be string.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    PERFOMANCE
+ --------------
+
+
+ public static  void main(String[] args) throws Exception{
+
+   String sq ="";
+   for(int i=0;i<26;i++)
+   {
+       char ch= (char) ('a'+i);
+       System.out.println(ch);
+   }
+output
+-------
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
+
+
+ public static  void main(String[] args) throws Exception{
+
+   String sq ="";
+   for(int i=0;i<26;i++)
+   {
+       char ch= (char) ('a'+i);
+       sq+=ch;
+   }
+        System.out.println(sq);
+
+    }
+
+abcdefghijklmnopqrstuvwxyz
+
+  
+ memory
+
+  "" +"a"  = "a"
+  "a"+ "b" = "ab"
+  "ab"  + "c" = "abc"
+   .........
+
+every time it will create new object
+
+   a+ ab+ abc+......
+ 
+   1+2+3+........N
+
+    N(N+1)/2      = O(N^2)
+
+
+
+
+in this case lot of memory waste and it will create lot of object so we use String Builder
+
+STRING BUILDER
+-------------
+
+String Builder is a seperate data type, seperate class  
+
+it will be need one object and therir changes in same object.
+
+it is mutable
+
+
+public static  void main(String[] args) {
+
+    StringBuilder s = new StringBuilder();
+   for(int i=0;i<26;i++)
+   {
+       char ch= (char) ('a'+i);
+       s.append(ch);
+   }
+        System.out.println(s.toString());              //abcdefghijklmnopqrstuvwxyz
+        s.reverse();
+        System.out.println(s.toString());              //zyxwvutsrqponmlkjihgfedcbas
+        s.deleteCharAt(0);
+        System.out.println(s);                      //yxwvutsrqponmlkjihgfedcbas
+
+    }
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+STRING METHODS
+---------------
+
+
+ public static  void main(String[] args) throws Exception{
+    String name = "Aravind M 2";
+    System.out.println(name.toUpperCase());            //ARAVIND M 2
+    System.out.println(name);                          //Aravind M 2
+    System.out.println(name.charAt(0));                //A
+    System.out.println(name.equalsIgnoreCase("aravind m 2"));  //true
+    System.out.println(Arrays.toString(name.split(" ")));        //[Aravind, M, 2]           
+    System.out.println("      st     ".strip());                       //st                         - remove white spaces before and after
+
+       String s= "ARAVIND  a";
+        System.out.println(Arrays.toString(s.toCharArray()));    //[A, R, A, V, I, N, D,  ,  , a]
+    }
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+PALINDROME program
+-----------------
+
+
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        System.out.println(isPalindrome("sabas"));
+    }
+
+
+    public static boolean isPalindrome(String n)
+    {
+        for(int i=0;i<n.length()/2;i++)
+        {   char s= n.charAt(i);
+            char e = n.charAt(n.length()-1-i);
+            if(s!=e)
+                return  false;
+        }
+     return  true;
+    }
+}

@@ -1,0 +1,26 @@
+Offile receipt -13
+
+-it can be happen some one give cash to you, or bank transfer 
+- it can be recorder some ware
+- some where receipt is added 
+
+credit - tds  (Tax detucted at source)
+
+ we paided credit - it also paided 
+
+
+Special deposit -
+
+- it will create we can c
+
+
+Receipt Method	Purpose	Where It’s Used?
+TDS	         -Tax deduction before payment	Salary, contractor payments, rent, interest, commissions
+
+Payment Gateway	 - Online transaction processing	E-commerce, service payments, digital wallets
+
+Special Deposit	  -  Reserved funds for compliance or security	Tax deposits, legal obligations, high-value savings
+
+
+Credit Note  -	Adjustments & refunds	Business transactions, invoice corrections, returns
+

@@ -1,0 +1,69 @@
+Spring and Spring Boot
+
+-> spring started 2003 its strartsat 2003 it started to solve the problem of java EE
+
+-> java Ee use to built enterprice app but it is complex and heavy.
+
+
+Spring is a framework  used  to develop enterprice application.
+
+Key Features are 
+  
+-> Dependency Injection   provides Ioc(inversion of control)  object can be created by spring for u. we dont want to create new object.
+
+-> loosely couple application
+
+-> Spring can integrate with other framework( like hibernate)
+------------------------------
+-> Transaction Management 
+
+-> Security    
+
+it helps developer creates scalable , maintainable and efficient app
+
+
+
+
+
+______________________________________________________________________________________________________________________________________________________
+
+Dependency Injection
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Spring boot
+
+Springs project is Springboot
+
+-> follows convention over Configuration.  (configure pandrathula time spend panna maatom)   (annotation based Configuration)
+
+-> It have Embeded Server         (Tomcat Web Server ) Default ta integrate aaiyu vanthurum
+
+-> APIs   can be built in minutes
+
+APIs (especially Web APIs) use HTTP methods to communicate between clients and servers.   
+
+ i) http methods ( Get,Post ,put Delete) Rest Api.
+ ii) SPring Data JPA (magic)
+
+
+
+Standalone App : the output can be come in web Browser.
+
+
+
+
+                                    

@@ -1,0 +1,117 @@
+React Learning 
+
+
+
+creating react project
+---------------------
+
+sepicif folder >npx create-react-app react-intro               -> enter   - it will show Happy hacking when completed
+______________________________________________________________________________________________________________
+
+Running 
+------
+
+go to the particular folder using cd coment 
+
+  npm start     - enter the command to start
+
+___________________________________________________________________________________________________________________________________
+Stop
+_____
+
+ctrl+c  
+
+___________________________________________________________________________________________________________________________________  
+if u want change  default browser
+--------------------------------
+
+setting->default->chrome....
+
+
+___________________________________________________________________________________________________________________________________  
+
+Understand React project
+--------------------
+
+ 1) Using vs code to run
+      
+        open -> ctrl +`  to oprn terminal   -> npm start // for start     -> ctrl +c   // for stop 
+
+
+  Summary of node_modules Folder
+-------------------------------
+	->Purpose: Stores all installed dependencies for a project.
+
+	->How It Works: When you run npm install, it downloads and saves required packages.
+
+	->Can It Be Deleted? Yes, you can delete it and restore it using npm install.
+
+	->Should It Be in Git? ❌ No! Use .gitignore to exclude it.
+
+	->Used In: React, Next.js, Node.js, and other JavaScript projects.
+
+public Folder in React
+--------------------
+
+->In a React app (create-react-app), it contains:
+
+	*) index.html → The main HTML file where the React app is injected.
+
+	*) favicon.ico → The site icon.
+
+	*) manifest.json → Used for Progressive Web Apps (PWAs).
+
+	*)Any other static assets (images, PDFs, etc.)
+
+
+package.json vs package-lock.json in React
+----------------------------------------
+
+Feature              | package.json          | package-lock.json  
+---------------------|----------------------|----------------------
+Purpose              | Defines project dependencies & metadata | Locks exact dependency versions  
+Editable             | Yes, manually         | No, auto-generated  
+Tracks Exact Versions | No (uses ^ or ~)      | Yes, ensures consistency  
+Required in Git?     | Yes                   | Yes (to maintain dependency consistency) 
+
+README.md Overview
+-----------------
+
+- What is it? → A documentation file in Markdown (.md) format.
+- Purpose:
+  ✔ Explains the project and its features.
+  ✔ Provides installation and usage instructions.
+  ✔ Helps developers collaborate and contribute.
+- Common Sections:
+  - Project title and description
+  - Installation steps
+  - Features
+  - Usage guide
+  - Contact information
+- Why use it? → Makes the project easier to understand and use.
+
+
+📂 src Folder in React
+----------------------
+
+- What is it? → The main folder where all React application code is written.
+- Purpose:
+  ✔ Contains components, styles, and logic of the app.
+  ✔ Processes files using Webpack and Babel.
+- Common Files/Folders:
+  - 📄 index.js → Entry point of the app.
+  - 📄 App.js → Main component of the app.
+  - 📂 components/ → Stores reusable UI components.
+  - 📂 assets/ → Stores images, icons, and styles.
+- Why use it? → Keeps project structure organized and manageable.
+
+ _________________________________________________________________________________________________________________________________
+Note
+
+
+ -> we crete all the code as converted into pure java code  in a single file called Bunddle js file 
+
+-> web pack  helps to convert a all the files into single  pure js file
+
+
+

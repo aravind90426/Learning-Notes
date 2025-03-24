@@ -1,0 +1,361 @@
+LINEAR SEARCH
+----------------
+
+        0    1     2   3    4   5
+  arr=[18 , 12,   7,   14 , 77, 50]
+
+  target 14
+
+its starts searching from start index to end index
+
+Time complexity
+--------------
+
+best case : O(1)   // constant           |   worst case : O(n)   n= size of array
+
+
+in there is 2000 elements in the array. if we find best case it will take one comparison only;
+
+eg 
+  arr = [1,2,77,88,99...........200 elements]
+
+  target =1
+  
+
+it will take one comparison only
+
+
+worst case: element not present at the array  it will check 2000 times
+
+        ^
+t   200 |------	/		   	time    |
+	|      /|				|
+    100	|--  /	|				|
+	|  /	|			     1MS|----|----|------|
+        |/  |   |                               |    |    |      |
+        |------------- >                        |----|----|------|----->
+           100  200  size                            100  200     500  size
+
+  worst case                                    BEST CASE
+    
+  500 item = 500 ms                              Time complexity = O(1)
+
+
+------------------------------------------------------------------------
+code 
+
+public class Main {
+    public static void main(String[] args) {
+        int arr[]={1,2,4,5,7,9,3};
+        int index= linearSearch2(arr,8);
+        System.out.println(index);
+    }
+    static  int linearSearch(int[] arr,int target)
+    {
+        if(arr.length==0)
+            return -1;
+        for(int i=0;i<arr.length;i++)
+        {
+            if(arr[i]==target)
+            {
+                return i;
+            }
+
+        }
+        return -1;
+    }
+    static  int linearSearch2(int[] arr,int target)       // for each loop
+    {
+        if(arr.length==0)
+            return -1;
+        for(int element:arr)
+        {
+            if(element==target)
+            {
+                return element;
+            }
+
+        }
+        return Integer.MAX_VALUE;   // -1 may be element in an array
+    }
+
+    static  boolean linearSearch3(int[] arr,int target)      //return boolean
+    {
+        if(arr.length==0)
+            return false;
+        for(int element:arr)
+        {
+            if(element==target)
+            {
+                return true;
+            }
+
+        }
+        return false;  
+    }
+
+}
+---------------------------------------------------------------------------------
+Search in strings
+-----------------
+
+
+
+import java.util.Arrays;
+
+public  class Main {
+    public static void main(String[] args) {
+        String str="aravind";
+        char target = 'i';
+        System.out.println(search(str,target));
+        System.out.println(Arrays.toString(str.toCharArray()));      //     [a, r, a, v, i, n, d]
+    }
+   static boolean search(String str,char target)
+    {
+        if(str.length()==0)      // inside there is arr.length
+        {
+            return  false;
+        }
+        for(int i=0;i<str.length();i++)
+        {
+            if(target == str.charAt(i))
+            {
+                return  true;
+            }
+        }
+        return  false;
+    }
+    static boolean search2(String str,char target)     //for each loop
+    {
+        if(str.length()==0)      // inside there is arr.length
+        {
+            return  false;
+        }
+
+        System.out.println(Arrays.toString(str.toCharArray()));      //     [a, r, a, v, i, n, d]
+
+        for(char i:str.toCharArray())   // it will convert strring to char array
+        {
+            if(i==target)
+            {
+                return  true;
+            }
+        }
+        return  false;
+    }
+        
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+3)   Search in range
+      -----------------
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr ={1,2,3,1,7,6,69,90,99,81,87};
+        int target =69;
+        System.out.println(linearSearch(arr,target,1,4));
+
+    }
+    static int linearSearch(int[] arr, int target,int start, int end)
+    {
+        if(arr.length==0)
+            return -1;
+        for(int i=start;i<= end;i++)
+        {
+            if(arr[i]==target)
+            {
+                return i;
+            }
+
+        }
+        return -1;
+    }
+
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+ Minimum  and Maximum
+----------------------
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr ={1,2,3,1,7,6,69,90,99,81,87};
+
+        System.out.println(minimum(arr));
+      System.out.println(maximum(arr));
+
+    }
+    static int minimum(int[] arr)
+    {
+
+        int min = arr[0];
+        for(int i=1;i<=arr.length-1;i++)
+        {
+            if(min>arr[i])
+            {
+                min=arr[i];
+            }
+
+        }
+        return min;
+    }
+
+    static int maximum(int[] arr)
+    {
+
+        int max = arr[0];
+        for(int i=1;i<=arr.length-1;i++)
+        {
+            if(max<arr[i])
+            {
+                max=arr[i];
+            }
+
+        }
+        return max;
+    }
+
+}
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+4)search in 2d array;
+--------------------
+
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int arr[][] = {{1, 2,}, {4, 5}, {7, 9, 3}};
+
+
+        int[] index = linearsearch(arr, 3);
+        System.out.println(Arrays.toString(index));
+
+    }
+
+    static int[] linearsearch(int[][] arr, int target) {
+        int mini = arr[0][0];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++)
+
+                if (arr[i][j] == target) {
+                    return new int[]{i, j};
+                }
+
+        }
+
+        return new int[]{-1, -1};
+    }
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------
+5) min and max in 2d array
+------------------------------
+
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int arr[][] = {{1, 2,}, {4, 5}, {7, 9, 3}};
+
+
+        System.out.println(min(arr));
+        System.out.println(max(arr));
+
+    }
+
+    static int min(int[][] arr) {
+        int mini = arr[0][0];      // mini =Integer.MAX_VALUE   // = -2222... something
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++)
+
+                if (arr[i][j] < mini) {
+                    mini = arr[i][j];
+                }
+
+        }
+        return mini;
+    }
+
+    static int max(int[][] arr) {
+        int maxi = arr[0][0];   //Integer.MAX_VALUE
+        for (int[] i : arr) {
+            for (int j : i) {
+
+                if (j > maxi) {
+                    maxi = j;
+                }
+
+            }
+        }
+        return maxi;
+    }
+}
+-------------------------------------------------------------------------------------------------------------
+
+https://leetcode.com/problems/find-numbers-with-even-number-of-digits/description/
+
+
+Find numbers with even number of digits(1295)
+
+
+public class Main {
+    public static void main(String[] args) {
+      int[]  nums = {555,901,482,1771,1211};
+
+    System.out.println(findNumbers(nums));
+    }
+   static int findNumbers(int[] nums) {
+        int count =0;
+        if(nums.length==0)
+        {
+            return -1;
+        }
+        for(int i:nums)
+        {
+            if(evendigit(i))
+            {
+              count++;
+            }
+        }
+
+        return  count;
+    }
+
+    private static boolean evendigit(int i) {
+        return countDigit(i)%2==0;
+    }
+
+    private static int countDigit(int i) {
+        if(i<0)
+        {
+            i=i*-1;
+        }
+
+        int c=0;
+        while(i>0)
+        {
+            c++;
+            i=i/10;
+        }
+        return c;
+    }
+static  int countDigit2(int i){        //  best timecomplexity
+        if(i<0)
+        {
+            i=i*-1;
+        }
+        return (int)Math.log10(i)-1;     // it will find number of digits
+  }
+
+}
+
+
+
