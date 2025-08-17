@@ -1,5 +1,16 @@
 Spring Security
 
+-> Spring Security is a framework in the Spring ecosystem that helps secure your Java/Spring applications.
+-> It mainly does two things:
+
+    Authentication → Verify "Nee yaar?"
+
+Example: Username & password check while login.
+
+Authorization → Check "Nee inga vara permission iruka?"  
+
+Example: Admin page access only for ADMIN users.
+
 
 Authentication and Authorization
 
@@ -99,7 +110,6 @@ client ------------------>       f1
 
 
 
-   spring give default filter for configuration
 
 
 
@@ -132,11 +142,208 @@ Explanation of the Flow:
 
 
 
+SecurityFilterChain
+______________
+
+  -> In Spring Security, every incoming request passes through a chain of filters before it reaches your controller.
+
+  -> These filters check authentication & authorization and apply other security features.
+
+   -> The SecurityFilterChain bean is where you define your security rules (which URLs need login, which are public, what roles are required, etc.).
 
 
+   spring give default filter for configuration
+
+EG)
+___
+
+. SecurityFilterChain (Spring Security layer)
+
+First stop: Security Filter Chain 🛡️
+
+Checks:
+
+    -> Is this request allowed without login? (permitAll())
+
+    -> If login needed → Is the user authenticated?
+
+    -> If authenticated → Does the user have the right role?
+
+    -> If pass → request goes to the DispatcherServlet.
+
+    -> If fail → returns Access Denied or redirects to login.
+
+
+
+3. DispatcherServlet (Spring MVC layer)
+--------------------
+
+  -> Acts as Front Controller.
+
+  -> Finds the right controller method using HandlerMapping.
 
 
 ----------------------------------------------------------------------------------------------------------------------------
+
+Spring Security – Default Behaviour
+_____________________________________
+
+ 1) Authentication Required for All Requests
+
+        By default, every HTTP request needs authentication.
+
+ 2) Auto-Generated Login Form
+  
+        If you haven’t created your own login page, Spring Security provides a basic form at /login.
+
+ 3) Default User
+
+        Username: user
+
+        Password: Randomly generated (printed in console).
+
+  -> You can change these via application.properties:
+
+        spring.security.user.name=admin
+        spring.security.user.password=1234
+
+4. Session-based authentication
+
+    -> Once you log in, Spring Security stores your authentication in an HTTP session.
+
+    -> You don’t need to log in again for each request until the session expires or you log out.
+
+5) Logout endpoint
+
+    -> By default, /logout is enabled.
+
+    -> Sending a POST request to /logout will:
+
+           Invalidate the session
+
+           Clear authentication
+  
+          Redirect you to the login page
+
+6. CSRF Protection enabled
+
+    -> CSRF (Cross-Site Request Forgery) protection is ON for non-GET requests (POST, PUT, DELETE).
+
+    -> This means if you try to POST from tools like Postman without sending the CSRF token, it will fail unless CSRF is disabled.
+
+7. Password stored in memory (default)
+
+    -> The default user/password are kept in memory (no database involved) unless you configure UserDetailsService.
+
+__________________________________________________________________________________________________________________________________________________
+
+When We Need Manual Configuration
+------------------------------
+
+  If you want to:
+
+       -> Allow some endpoints without authentication
+
+       -> Change login form page
+
+        -> Use JWT instead of session login
+
+        -> Disable CSRF for APIs
+
+        -> Add role-based access control
+
+👉 Then you override the default config by creating a configuration file
+
+
+
+
+@Configuration
+@EnableWebSecurity // Enables Spring Security's web security support
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+            // ==================== AUTHORIZATION RULES ====================
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/public/**").permitAll() // Public endpoints: no login needed
+                .requestMatchers("/admin/**").hasRole("ADMIN") // Only ADMIN can access
+                .anyRequest().authenticated() // All other URLs require login
+            )
+
+            // ==================== FORM LOGIN ====================
+            .formLogin(form -> form
+                .loginPage("/login")               // Your custom login page URL
+                .loginProcessingUrl("/process-login") // Form action URL where Spring Security will process credentials
+                .usernameParameter("username")     // Name of the username field in the login form
+                .passwordParameter("password")     // Name of the password field in the login form
+                .defaultSuccessUrl("/home", true)  // Redirect here after successful login (true = always redirect here)
+                .failureUrl("/login?error=true")   // Redirect if login fails
+                .permitAll()                       // Allow everyone to see the login page
+            )
+
+            // ==================== LOGOUT ====================
+            .logout(logout -> logout
+                .logoutUrl("/logout")              // URL to trigger logout
+                .logoutSuccessUrl("/login?logout") // Redirect after logout
+                .invalidateHttpSession(true)       // Clear the session
+                .deleteCookies("JSESSIONID")       // Delete cookies
+                .permitAll()
+            )
+
+            // ==================== CSRF PROTECTION ====================
+            .csrf(csrf -> csrf.disable()); // ❗ Disable only for APIs / testing (default is enabled for web forms)
+
+        return http.build();  // object ha uild panni retun pannum 
+    }
+}
+
+
+
+4. Why SecurityFilterChain?
+
+  -> Spring Security uses filters to process security logic (authentication, authorization, etc.).
+
+  -> All these filters form a filter chain.
+
+  -> SecurityFilterChain is where we tell Spring which requests are allowed, denied, or redirected.
+
+  -> By defining our own SecurityFilterChain bean, we replace or add to the default filter chain rules.
+
+
+
+
+        [ HTTP Request ]
+               |
+               v
+ ┌──────────────────────────────────────┐
+ │ Servlet Container (Tomcat, etc.)     │
+ └──────────────────────────────────────┘
+               |
+               v
+ ┌──────────────────────────────────────┐
+ │ Spring Security FilterChainProxy      │
+ │  ┌────────────────────────────────┐  │
+ │  │ SecurityFilterChain ( /admin/** ) │
+ │  │  - Auth checks                  │  │
+ │  │  - Role checks                  │  │
+ │  │  - CSRF checks                  │  │
+ │  └────────────────────────────────┘  │
+ └──────────────────────────────────────┘
+               |
+               v
+ ┌──────────────────────────────────────┐
+ │ DispatcherServlet (Spring MVC)        │
+ │   - HandlerMapping → Controller       │
+ │   - ViewResolver / JSON Output        │
+ └──────────────────────────────────────┘
+               |
+               v
+        [ HTTP Response ]
+
+
+_______________________________________________________________________________________________________________________
 
 
 Task 1)   Try hello world program - it shows login page default  
@@ -315,6 +522,7 @@ public class StudentController {
 
 
 }
+
 
 
 
@@ -520,3 +728,286 @@ in configuration class
 
 ______________________________________________________________________________________________________________________
 
+verifying user from DB
+___________________
+
+
+
+
+
+normal user name and psword  are ----> Unauthenticated object    // its stores like objecr
+
+
+
+				_____________________________
+Unauthenticated object --------> |  Authenticator Provider  |-----------> authenticated object 
+				 |__________________________|
+
+
+
+
+
+configuration file
+----------------
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+
+    // we configure SecurtyFilture
+    @Autowired
+    UserDetailsService userDetailsService;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.csrf(customizer -> customizer.disable());   // disable csrf
+        http.authorizeHttpRequests(request-> request.anyRequest().authenticated());// it helps to witthout login no one can permit
+        //http.formLogin(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults());   // it helps to other client like postman to acesss
+
+        //stateless - oru oru time mu new session id generate pannum
+        http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();//   give security filtre chain option
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();  // intract with db
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());  // now we not encoe password
+        provider.setUserDetailsService(userDetailsService); // we give UserDetailsService object in it so we create class
+        return  provider;
+    }
+
+
+}
+
+
+controller
+-----------     - after logine
+
+
+@RestController
+public class Controller {
+    @GetMapping("/")
+    public String index(HttpServletRequest req)
+    {
+        return "Hello world  "  + req.getSession().getId();
+    }
+}
+
+dao
+------
+
+public interface UserDetailRepo extends JpaRepository<Users,Integer> {
+
+
+    Users findByUsername(String username);
+
+}
+
+
+sevice
+-------
+
+@Service
+public class MyUserDetailService implements UserDetailsService {
+
+    @Autowired
+    UserDetailRepo userDetailRepo;
+
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Users user = userDetailRepo.findByUsername(username);     // calling repo to get user
+        if (user == null) {
+            System.out.println("User NOT Found!");
+            throw new UsernameNotFoundException("Username NOT Found");
+        }
+
+
+
+        return new UserPrinciple(user);     - we rturn in form of UserDetails -
+    }
+
+}
+
+   we rturn in form of UserDetails - it is an interface so we create class as userprinciple 
+
+
+
+package com.example.springSecurity.model;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+public class UserPrinciple implements UserDetails {
+
+    private  Users users;
+    public UserPrinciple(Users users) {
+        this.users = users;
+    }
+
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return users.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return users.getUsername();
+    }
+
+
+}
+
+
+
+just implement pannale itnatha methods la vanthurum
+
+
+
+
+
+Model
+
+-> no - arg constructor must -- athunaala 1 day error solve pannite irunthen
+
+
+
+
+@Entity
+public class Users {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String password;
+
+    // No-arg constructor required by Hibernate
+    public Users() {}
+
+    // Parameterized constructor
+    public Users(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+}
+ 
+
+
+
+unauthenticated object --------> |  Authenticator Provider  |-----------> authenticated object 
+
+
+                                      |
+				      | ->  userDetailSevice theva -- interface -  naama oru class create panni implement pannuvom
+											|
+								________________________|
+           							|-> loadbyusername nu oru method athula irukku athuku  
+									UserDetail theva
+													
+            								| - nama kitta veru users mattum tha irukku athunaala seperte class implement 
+										panni crete pannuvom
+
+
+
+
+_____________________________________________________________________________________________________________________________________________________________________
+
+                             JWT WEB TOKEN
+
+
+1. JWT-na enna?
+
+  -> JWT is like a digital visiting card.
+
+  -> Namma user login pannumbothu, server namakku oru token kudukkum.
+
+  -> Andha token la namma identity (email/username) & some info store pannirukkum, but encrypted/secure form la.
+
+  -> Adha use pannitu next time server kita “naan already login pannirukken” nu prove panna mudiyum
+
+
+
+1. User → Auth Controller
+
+  ->User sends a POST request to /auth/login with username & password.
+
+Example:
+
+{
+  "username": "aravind",
+  "password": "12345"
+}
+
+2. Auth Controller → Authentication Manager
+
+  -> AuthController receives the login request.
+
+  -> It calls AuthenticationManager to check whether the username/password is correct.
+
+  -> AuthenticationManager → internally uses DAO Authentication Provider.
+
+3. DAO Authentication Provider → Database Check
+
+  -> DAO (Data Access Object) Authentication Provider will:
+
+  -> Fetch user details from DB (via UserDetailsService).
+
+  -> Compare the submitted password with the stored password (usually hashed).
+
+  -> If correct → it returns an Authentication object (which contains username, roles, etc.).
+
+4. Authentication Manager → JWT Util
+
+  -> Once authentication is successful, the AuthController will ask JWT Util to generate a JWT token.
+
+JWT Util does:
+
+  -> Takes authenticated user details (username & roles).
+
+  ->Signs the token using a secret key.
+
+  ->Sets expiry time (example: 1 hour).
+
+5. JWT Token → User
+
+The AuthController sends the generated token back to the user as a response.
+
+The user stores this token (in localStorage, cookies, or mobile app memory).
+
+Next Requests (Not shown fully in diagram)
+
+User sends the token in the Authorization header:
+
+Authorization: Bearer <jwt_token>
+
+
+A JWT filter checks this token for every request.
+
+If valid → allows access to protected APIs.
+
+💡 Key points in this diagram:
+
+AuthenticationManager → checks credentials.
+
+DAO Auth Provider → interacts with DB and verifies password.
+
+JWT Util → creates token.
+
+AuthController → acts like the main coordinator.

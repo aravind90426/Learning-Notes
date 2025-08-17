@@ -1,0 +1,130 @@
+  my flow
+
+
+ wants  -  delete connector 
+
+deleteConnectorById  mrethod - connector serviceclass  la irukku 
+
+ step 1 -> fetch all credential by connector id    -  pick from airLinecredentail dao 
+
+ step 2 -> delete stock by credential id  
+
+                   |-- 2 approch? 
+
+                         |- fetch all stock by credential id or direct delete 
+                                
+                                            | - problem   stock table la credential id illa
+
+ step -3 -> delete all credeials    - aldreay having method delete crendial
+ 
+
+
+
+
+
+
+SELECT 
+    tc.table_name, 
+    kcu.column_name
+FROM 
+    information_schema.table_constraints AS tc
+JOIN 
+    information_schema.key_column_usage AS kcu
+    ON tc.constraint_name = kcu.constraint_name
+    AND tc.constraint_schema = kcu.constraint_schema
+WHERE 
+    tc.constraint_type = 'FOREIGN KEY'
+    AND kcu.constraint_schema = 'public'  -- your schema
+    AND kcu.ordinal_position IS NOT NULL
+    AND EXISTS (
+        SELECT 1
+        FROM information_schema.referential_constraints AS rc
+        JOIN information_schema.constraint_column_usage AS ccu
+          ON rc.unique_constraint_name = ccu.constraint_name
+        WHERE 
+            rc.constraint_name = tc.constraint_name
+            AND ccu.table_name = 'airline_credentials'
+            AND ccu.column_name = 'credential_id'
+    );
+
+
+
+
+
+
+
+
+
+
+new flow 
+
+
+
+ target   - delete connector    
+
+
+
+   ->   connector and Crendential   |   many to one    - unidirectional    creden - cone
+
+   ->    credential and stocks many to many
+
+
+  ->    delete one connector  fK violation problem   because credential use connectors
+
+
+  ->      List all credentials while connected  By connector Id
+
+  ->      credential have list of connected  stock
+
+                        ->   remove all stock from the particular credential 
+                        ->    then delete the  particular  credential
+
+
+     no need to delete stock 
+
+ -> delete connector
+
+
+ target   - delete stock                  store and stock has many to one 
+
+         ->   remove all credential  from the particular stock 
+
+         ->  GET all storeDetails    by stock uid
+  
+        ->  delete all  store 
+
+         -> Get all AirLineCommisionRules  by stock uid
+ 
+         ->  delete all AirLineCommisionRules
+
+        
+          ->    then delete the  particular  stock
+
+
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+responses -> getBody() -> getOtaPriceRs
+
+
+
+      
+
+ resposnses , offer , offer group
+
+
+
+
+
+we have PTC breakdoenb
+ 
+
+
+
+
+
+
+

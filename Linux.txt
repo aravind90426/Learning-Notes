@@ -76,7 +76,7 @@ _______________________________
 
 why  we need it?
 
-     it have hpervaissour software .
+     it have hpervaisour software .
 
           -> it runs  multiple os in one Hardware
 
@@ -132,7 +132,7 @@ Installing centos
 ------------------------
 -> agAn create vm and include the os
 
--GUI option
+-GUI option instead  use - vbox su
 
 
 

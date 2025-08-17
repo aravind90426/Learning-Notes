@@ -127,10 +127,9 @@ int hat xml file u should mention that we creating a obj;
 ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
 
- ->intha line tha ioc container ra create pannum 
+ -> intha line tha ioc container ra create pannum 
  -> bean.xml la enna enna file enna enna object bean la irukko athuula mattum tha object irukkum
-
--> its like
+ -> its like
 
 <bean id="st1" class="bean">
 </bean>
@@ -690,7 +689,7 @@ public class App
 
 
 @Configuration
-@ComponentScan("org.example")    - ella componeny yu scan pannu which mean entha class ku la obj create pannanum nu sollum
+@ComponentScan("org.example")    - ella component yu scan pannu which mean entha class ku la obj create pannanum nu sollum
 public class MyConfiq {
 
 }

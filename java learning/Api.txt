@@ -1,0 +1,64 @@
+Api 
+___
+
+-> Api is Application programming  Interface.
+
+-> set of rules and protocols that allow one software application to interact and communicte with other.
+
+-> exmple restaurant Menu 
+
+Why Api needs ?
+
+ -> share data
+ -> speed up devlopment
+ 
+Popular Apis
+
+-> Google Maps Api
+->Twitter Api
+
+
+Types of API
+-------------
+
+-> Internal API's   eg) notifications api
+-> External api's  eg) public api's
+-> partner Api's   eg
+
+
+Status Codes in APi
+-------------------
+           req
+ client -------------> server
+        <-------------
+           res with status code  
+
+  
+1xx (informational)
+2xx (Successful)
+3xx (Redirection)
+4xx (client error)
+5xx (srver Error)
+
+
+Commonly used Status codes
+---------------------------
+
+-> 200 ok
+-> 201 Created
+-> 204 No Content ( nothing to return)
+-> Moved Permanently 
+-> 400 Bad Request
+-> 401 Unauthorized
+-> 403 Forbidden 
+-> 404 Not Found
+-> 500 Internal Server Error   
+
+
+Types of Api Request
+_______________________
+
+Get , Post , put , Delete    
+
+
+________________________________________________         

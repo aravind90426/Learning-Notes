@@ -2,10 +2,98 @@ React Learning
 
 
 
+ client -------------------->  sever
+        <-------html + js ----
+                        ------>
+                         <--js--
+
+ 
+
+
+Reconcilition =   
+
+actual dom, virtual Do , nw Virtula do ,  irhula irukura date vala pakka va update pannurathu
+
+ state , props la proper ra update pannurathu 
+
+
+Diffing algorithm :
+
+  virtual Dom , new Virutal Dom  la irukura small changes sa eduthutu crt ta poi effiecient ha update pannurathu than Diffing algorithm
+
+Declarative programming and imperative programming
+
+
+
+npm = needs o install 3rd party liobrar
+
+
+nde = un time environment
+
+npm work panna node thevaso install both
+
+
+
+imeartive programming nd declarative programming
+
+
+
+ react IN HTML
+----------------
+
+ -> srarch cdn links in google    and      paste in html head tag
+
+ -> and also add babel cdn links
+
+
+ -> it basically includes 3 files
+
+         *   react development
+         *   react dom
+         *   babel   (supports old version js for old browser)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My React App</title>
+  <!-- React and ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel CDN to use JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <!-- Root div for React -->
+  <div id="root"></div>
+
+  <!-- Your React Code -->
+  <script type="text/babel">
+    // Simple React component
+    function App() {
+      return (
+        <div>
+          <h1>Hello, React in HTML!</h1>
+          <p>This is a simple React app without using create-react-app.</p>
+        </div>
+      );
+    }
+
+    // Rendering the App component into the root div
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
+
+
+
+
 creating react project
 ---------------------
 
-sepicif folder >npx create-react-app react-intro               -> enter   - it will show Happy hacking when completed
+sepicic folder >npx create-react-app react-intro               -> enter   - it will show Happy hacking when completed
 ______________________________________________________________________________________________________________
 
 Running 
@@ -68,10 +156,10 @@ package.json vs package-lock.json in React
 ----------------------------------------
 
 Feature              | package.json          | package-lock.json  
----------------------|----------------------|----------------------
+---------------------|-----------------------|----------------------
 Purpose              | Defines project dependencies & metadata | Locks exact dependency versions  
 Editable             | Yes, manually         | No, auto-generated  
-Tracks Exact Versions | No (uses ^ or ~)      | Yes, ensures consistency  
+Tracks Exact Versions| No (uses ^ or ~)      | Yes, ensures consistency  
 Required in Git?     | Yes                   | Yes (to maintain dependency consistency) 
 
 README.md Overview
@@ -115,3 +203,1345 @@ Note
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+same thing more notes  deeply and overview
+
+_____________________
+
+
+npm  - Node Package Manager.
+npx = Node Package eXecute
+
+
+-> npm is for installing  and managing packages (and using them later in your project).
+
+-> npx is for executing packages (without installing them permanently).
+
+
+* npx create-react-app myapp: If you want to start a new React app with everything (React, Webpack, Babel) already set up.
+
+                 -        npx create-react-app myapp will install React — but inside that new project folder.
+
+		 -	It won’t install create-react-app globally (system-wide), so it saves space.
+
+                 -      You can directly start using React inside myapp/.
+
+
+
+* npm install react: If you already have a project and you just want to add React in it.
+               - with   inside package or 
+
+
+
+
+
+package.json
+____________
+
+👉 package.json = Node/React project oda important file.
+
+📌 Ithu enna panna use aagum?
+- Project name, version
+- Enna packages use pannirukkom (like React, Axios)
+- npm start maadhiri commands define panna
+- App oda details store panna
+
+📁 package.json la irukkura main items:
+
+1. name → Project name
+2. version → Namma project version (ex: 1.0.0)
+3. scripts → Commands (ex: "start": "react-scripts start")
+4. dependencies → Project ku thevaiyana libraries (ex: react, axios)
+5. devDependencies → Developer tools (only development time ku)
+6. main → Entry point file (default: index.js)
+
+✅ Example:
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "react-scripts start"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "axios": "^1.5.0"
+  }
+}
+
+💡 npm start kudutha:
+→ scripts la irukkura "start" command run aagum
+→ usually app open aagum in browser (localhost:3000)
+
+🧠 version field la irukkura value → namma project version dhaan
+
+_______________________________________________________________________________________________
+
+
+
+📁 node_modules/ – Interview Points (Thanglish)
+
+
+✅ node_modules/ na namma project ku install panna ella packages/libraries um store aagura folder.
+
+✅ Ithu automatic-aa create aagum when we run npm install or npx create-react-app name  
+
+✅ Oru React/Node.js library (like React) ku use aagura small-small helper packages ellam node_modules la irukkum.
+
+✅ Ithu thaan project la most memory space ah use pannura folder – romba perusa irukkum.
+
+✅ Manual-aa edit panna koodathu. Idhula edhavadhu maathinaa project crash aagalam.
+
+✅ GitHub la upload panna vendam. So .gitignore file la node_modules/ ah ignore panrom.
+
+✅ node_modules/ delete panninaa kooda no problem — just npm install kuduthaa again recreate aagidum.
+
+
+
+_________________________________________________________________________________________________________________________________________________
+
+📁 public/ folder – React project la irukkura browser-visible files store panna use aagum.
+
+🧾 Main Purpose:
+→ Direct-a browser ku access panna koodiya files inga irukkum
+→ Final-a render aagura single HTML fileum inga dhaan irukkum
+
+📌 Important files:
+
+1. index.html
+   → Main HTML file
+   → <div id="root"> irukkum
+   → React app athula render aagum
+
+2. favicon.ico
+   → Browser tab la kaattura small icon
+
+3. manifest.json
+   → Mobile or PWA shortcut details (app install icon, name, theme etc.)
+
+4. robots.txt
+   → Search engines (Google) enna crawl panna mudiyum/mudiyaadhu nu sollum
+
+5. Static files (optional)
+   → Logo, images, PDFs etc direct-a use panna
+
+🎯 Note:
+- Ithu la irukkura files la React code illa.
+- Naama eluthura JS/JSX code ellam src/ folder la irukkum
+- But render aagura output, index.html la `id="root"` div kulla thaan inject aagum
+
+✅ Interview La Solrathu:
+→ "`public/` folder la irukkura `index.html` dhaan React app render aagura main HTML file.  
+Baaki favicon, manifest, robots.txt maadhiri static filesum inga store pannuvom."
+_____________________________________________________________________________________________________________________________________________________
+
+📁 src/ folder
+
+→ App.js:
+  - Main UI component
+  - JSX la UI render
+
+→ index.js:
+  - Entry point of the app
+  - React renders App.js inside <div id="root">
+
+→ Components folder (optional):
+  - Separate components for different UI sections (Header.js, Footer.js, etc.)
+
+→ Styles (App.css, other CSS files):
+  - Styles for components
+  - Import and use CSS in React
+
+🧠 In short:
+→ `src/` la React app logic and UI work pannum.
+→ `index.js` la app start aagum, `App.js` main component.
+
+
+________________________________________________________________________________________________________________________________
+
+
+
+📄 package-lock.json – Thanglish Notepad Notes
+
+- package-lock.json automatic-a create aagum when we run `npm install`.
+- Ithu namma install pannra packages oda exact version-a lock pannum.
+- Appa rendu system la same project irundhaalum, same version install aagum.
+- Latest version irundhaalum, app lock pannirukkura version tha use aagum.
+- Main dependencies + athoda sub dependencies ellam ithula irukkum.
+- Ithu manual-a edit panna koodathu. npm tha handle pannanum.
+- Ithu Git-ku commit pannalaam. Team la yaar venaalum same setup la work panna mudiyum.
+
+✅ Interview Point:
+"package-lock.json ensures same package versions across systems. Version mismatch bug avoid aagum."
+
+
+____________________________________________________________________________________________________________________________________
+
+📄 .gitignore – Thanglish Notepad Notes
+
+- .gitignore is a file used in Git.
+- Ithu la list panrom: enna files/git folders Git-ku upload aagala-nu.
+- Git commit panna podhu, ithula irukkura files ignore pannidum.
+- Sensitive files, build files, or system generated files ignore panna use aagum.
+
+🎯 Common-a ignore panna files:
+- node_modules/ → Heavy folder, recreate panna mudiyum
+- .env → Secret keys irukkum
+- build/ → Final output folder
+- .DS_Store (Mac users), Thumbs.db (Windows) → System files
+
+💡 Example `.gitignore` content:
+
+
+______________________________________________________________________________________________________________________________________
+
+
+📄 README.md – Thanglish Notepad Notes
+
+- README.md is a markdown file in every project (mostly root-la irukkum).
+- Ithu project-ku intro maadhiri irukkum.
+- Project open pannumbodhu, first idha dhan paapanga (especially GitHub la).
+- Developer, team, or users ku puriyara maadhiri info kudukkum.
+
+📝 Enna laam usually irukkum:
+- Project name
+- Description (enna project, enna use)
+- How to install & run
+- Features
+- Screenshots (if needed)
+- Technologies used
+- Author details
+
+💡 Example README.md content:
+
+
+✅ Interview Point:
+"`README.md` file helps developers and users understand the project quickly.  
+It acts like a user guide or documentation for the project."
+
+
+________________________________________________________________________________________________________________________________________
+
+`npm start` Process - Thanglish Notes
+
+1. `npm start` command run pannumbothu:
+   - `react-scripts start` run aagum (defined in `package.json`).
+   - Webpack Dev Server start aagum and app-a bundle pannum.
+
+2. `public/index.html` file browser-la load aagum.
+   - Index.html is the template HTML file.
+
+3. `src/index.js` file run aagum:
+   - ReactDOM.render() function App.js-ai root div-la inject pannum (which is in index.html).
+
+4. Your React app will run on localhost:3000 in the browser.
+
+5. Hot Reload:
+   - Code-la changes panni save pannumbothu, automatically browser refresh aagum and changes will reflect.
+
+---
+
+Summary:
+- `npm start` calls `react-scripts start`, which starts the dev server.
+- index.html loads, and index.js renders App.js inside root div.
+- The app runs on localhost:3000.
+
+---
+
+Interview Point:
+- "`npm start` start pannum dev server, renders the React app in the HTML template, and runs on localhost:3000."
+
+
+
+__________________________________________________________________________________________________________________________
+
+
+Bundle.js
+
+
+  ->      naama eluthura ella code dum ore file la bundle.js sa maatha padum  - because apo than ella brower kum puriyum (old,new browser)
+
+ ->   namma crete rect app   using web pack to convert  and also development server ru uruvaakuthu 
+
+
+webpack Dev Server  
+
+
+- Webpack Dev Server helps you serve and bundle the app.
+
+- It auto-refreshes your page when you make changes.
+
+- It supports HMR (only reloads the changed part).
+
+
+___________________________________________________________________________________________________________________________
+
+Component
+---------
+ctrl + alt +r
+
+rafce
+
+        -> default ha basic code vanthurum
+
+
+
+📘 React Functional Component – Thanglish Notes
+
+1. Functional Component na enna?
+   - Oru JavaScript function thaana, athu JSX return pannum.
+   - JSX na HTML maari irukkura code, React-ku special syntax.
+
+2. Syntax:
+
+   import React from 'react';
+
+   function MyComponent() {
+     return (
+       <div>
+         <h1>Hello World</h1>
+       </div>
+     );
+   }
+
+   export default MyComponent;
+
+3. Arrow function la use panna:
+
+   const MyComponent = () => {
+     return (
+       <div>
+         <h1>Hello World</h1>
+       </div>
+     );
+   };
+
+4. Functional component oda advantages:
+   - Simple and clean code.
+   - `this` keyword use panna thevaila.
+   - Hooks use panna mudiyum (like useState, useEffect).
+   - Fast rendering.
+
+5. Props use panna:
+
+   function Greet(props) {
+     return <h1>Hello {props.name}</h1>;
+   }
+
+   // Usage:
+   <Greet name="Ravi" />
+
+6. Export and Import:
+
+   // Header.js
+   export default Header;
+
+   // App.js
+   import Header from './Header';
+
+7. Class vs Functional Component:
+
+   | Class Component           | Functional Component        |
+   |---------------------------|-----------------------------|
+   | Complex syntax             | Simple syntax               |
+   | Uses `this`                | `this` illa                |
+   | Lifecycle methods use pannum | Hooks use pannalaam     |
+   | Older style                | Modern React la preferred  |
+
+8. Simple Example:
+
+   const Header = () => {
+     return (
+       <header>
+         <h1>My App</h1>
+       </header>
+     );
+   };
+
+   export default Header;
+
+
+
+-> component ku -  thani thani js file uruvaakurathu best practice
+
+
+
+-> palaya react la    class component   tha use pannuvaanga
+
+_________________________________________________________________
+
+props 
+
+-> props na "properties" nu solrathu. Idhu oru data-passing mechanism between components.
+
+Ungaluku rendu component irundha:
+
+-> send data from one component to another component
+
+import React from 'react'
+import Car from './Car'
+
+const Info = () => {
+    const carInfo ={ name:"feraari",
+                      color : "red"}
+  return (
+    <>
+        <Car carInfo = {carInfo}/>        -> intha edathula send pandro any type multiple la kooda send panlam    like  <Car carInfo = {carInfo} carDo = {carInfo}/>
+    </>
+  )
+}
+
+export default Info
+
+ --------------------------------
+
+Car copmponent
+
+
+
+import React from 'react'
+
+
+const Car = (props) => {
+  
+    const {carInfo} = props;
+    const {color , name} = carInfo
+
+
+
+
+    
+
+    let d = `hi iam a ${color} ${name} car`;
+  return (
+    <div>{d}</div>
+    
+  )
+}
+
+export default Car
+________________________________________________________________________________________________________________________________________________________
+
+
+
+    Conditional rendering
+   -------------------------
+
+  ->   {carInfo.name!==undefined && carInfo.color!==undefined ? <Car carInfo = {carInfo}/> : null}    null na onnum mhe display aavathu
+       
+                                                                   |_ >   inga html kooda irukkarlam
+
+            or 
+
+
+  true va iruntha mattum display aaganum na 
+
+
+
+   {carInfo.name !== undefined && <Car carInfo = {carInfo}/>}      
+
+______________________________________________________________________________________________________________________________________________________________
+
+List 
+-----
+
+
+const carList  =[{ name:"feraari",color : "red"},
+        { name:"BMW",color : "black"},
+        { name:"Tesla",color : "White"}
+    ] 
+
+ <ul>
+   { carList.map((carInfo) => <li><Car carInfo={carInfo} /></li> )}
+ </ul>
+
+
+ map onu onnaa iterate panni display panna use aagum
+
+
+
+Key in react
+--------------
+
+Why use key in React list:
+
+key helps React identify items uniquely in a list.
+
+It makes list rendering fast and efficient.
+
+Avoids bugs like wrong item updates or reordering issues.
+
+Always use a unique value (like id) as the key – not just index.
+
+
+
+ { num.map((num, index) => <li key ={ index}>{num}  {index}</li>) }
+
+
+______________________________________________________________________________________________________________________________________________
+
+Styles
+
+
+Inlie style 
+  
+objects -key,values
+
+const Header = () => {
+  return (
+
+     <header style={{backgroundColor:"blue",color:"white"}}>
+        <h1>TO DO LIST</h1>
+     </header>
+  )  
+
+or
+
+
+
+const Header = () => {
+
+ const style ={backgroundColor:"blue",color:"white"}     - object create pannitu addpannikalam
+  return (
+     <header style={style}>   
+        <h1>TO DO LIST</h1>
+     </header>
+  ) 
+
+
+component style nu thaniya search panni kooda use panlaam
+
+
+
+
+
+
+___________________________________________________________________________________________________________________________
+
+kuripta files ku mattum css use pannanum na
+
+
+   📘 React External CSS Usage – 3 Types (Thanglish Notes)
+
+=================================================================
+1️⃣ NORMAL EXTERNAL CSS
+-----------------------------------------------------------------
+✅ Description:
+- Create 1 or more .css files
+- Import it in component using: import './style.css'
+- Styles apply globally (all components)
+
+✅ Example:
+style.css:
+    .title {
+        color: red;
+    }
+
+App.js:
+    import './style.css';
+    <h1 className="title">Hello</h1>
+
+⚠️ Downside:
+- Class name clash aagum (if same name used elsewhere)
+- Not safe for big projects
+
+=================================================================
+2️⃣ INLINE STYLES
+-----------------------------------------------------------------
+✅ Description:
+- Style directly component-kulla define panrom
+- Object format la kudukkanum
+
+✅ Example:
+App.js:
+    const headingStyle = {
+        color: 'blue',
+        fontSize: '24px'
+    };
+
+    <h1 style={headingStyle}>Hello</h1>
+
+⚠️ Downside:
+- No hover, media query, pseudo-classes
+- Code readability kurai aagum
+
+=================================================================
+3️⃣ CSS MODULES (Best Practice)
+-----------------------------------------------------------------
+✅ Description:
+- Create .module.css file
+- Import as object & use class names with dot notation
+- Styles only that component-ku dhaan apply aagum (scoped)
+
+✅ Example:
+Header.module.css:
+    .title {
+        color: green;
+    }
+
+Header.js:
+    import styles from './Header.module.css';
+    <h1 className={styles.title}>Header</h1>
+
+💡 React auto unique class names generate pannum (safe!)
+
+✅ Best for:
+- Large projects
+- Preventing style clash
+- Clean modular styling
+
+=================================================================
+🔚 Summary:
+-----------------------------------------------------------------
+✔️ Small app or common style = Normal CSS OK
+✔️ Fast dynamic style = Inline OK
+✔️ Big project, team work, safe style = CSS MODULE BEST ✅
+
+=================================================================
+________________________________________________________________________________________________________________________________________---
+_
+
+
+
+📘 React – State (JMM Style Notes)
+
+🔹 Definition:
+State = Component-oda dynamic data
+
+🔹 Use:
+- Data store panna
+- UI update panna
+- Changes handle panna
+
+🔹 Syntax:
+const [value, setValue] = useState(initialValue);
+
+🔹 Example:
+const [count, setCount] = useState(0);
+
+🔹 Update:
+setCount(count + 1)
+
+🔹 Features:
+✅ Component-specific
+✅ UI auto update
+✅ useState() hook use pannuvom
+
+🔹 Real-Life Example:
+Like button – Likes increase aagum when clicked
+
+React state use pannumbothu:
+
+UI automatic update aagum
+
+DOM access thevai illa
+
+Code clean-a, modular-a irukkum
+=> So, React state = Smart & scalable way to manage UI changes 🔥
+
+
+
+
+___________________________________________________________________________________________________________
+
+class component state with example
+
+
+import React, { Component } from "react";
+
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    // 👇 Initial state
+    this.state = {
+      count: 0,
+    };
+  }
+
+  // 👇 Function to update state
+  incrementCount = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Count: {this.state.count}</h1>
+        <button onClick={this.incrementCount}>Increase</button>
+      </div>
+    );
+  }
+}
+
+export default Counter;
+
+
+
+____________________________________________________________________________________________
+
+Using multiple state
+---------------------
+
+
+import React, { use, useState } from "react";
+function Bike(){
+   
+    const [battery,setBattery] = useState("lion");
+    const [engine,setEngine] = useState('ev');
+    const [color,setColor]= useState("red");
+    const [light,setLight] = useState("Led");
+    const [wheel,setWheel] = useState("TubeLess")
+    
+    return (<>
+       <h1>My Bike</h1>
+       <p>Battery :{battery}</p>
+       <p>Engine :{engine}</p>
+       <p>Color :{color}</p>
+       <p>light :{light}</p>
+       <p>wheel :{wheel}</p>
+    
+    </>);
+}
+export default Bike;
+_______________________________________________________________________________________________________________________________
+
+object in state
+
+import React, { use, useState } from "react";
+function Bike(){
+   
+    const [bikeInfo,setBikeInfo] = useState({
+        name:"crux",
+        milage:50,
+        color:"black"
+    });
+  
+    function click(){
+        setBikeInfo({name:"RX"})
+    }
+    return (<>
+       <h1>My Bike</h1>
+       <p>name :{bikeInfo.name}</p>
+       <p>Milage :{bikeInfo.milage}</p>
+       <p>Color :{bikeInfo.color}</p>
+       <button onClick= {click}> Click</button>
+    
+    
+    </>);
+}
+export default Bike;    
+
+
+
+but problem in updating
+_______________________
+
+
+
+ ->en naa ithula  , mathavalue kla null aairuthu
+->  so oru copy eduthutu athula maithuna crt ta irukkum
+
+->setBikeInfo({ ...bikeInfo, color: "red" });  ippadi use pandranaala bikeInfo a old value keep aagum    
+
+
+... -> means spread operator
+
+
+________________________________________________________________________________________________________________
+
+Use Effect
+-----------
+
+
+React - useEffect Hook (Beginner Notes)
+
+1. useEffect na enna?
+   - React la useEffect nu oru hook.
+   - Ithu "side effects" panna use aagum.
+   - Eg: API call, console log, timer set, localStorage save, etc.
+
+2. useEffect Syntax:
+   useEffect(() => {
+     // Ithu nadakanum
+   }, [dependency]);
+
+3. Eppadi work agum?
+   - Component render aagumbo run agum.
+   - Dependency change aana run agum.
+
+4. Simple Example:
+
+   import React, { useState, useEffect } from 'react';
+
+   function App() {
+     const [count, setCount] = useState(0);
+
+     useEffect(() => {
+       console.log("Count value is:", count);
+     }, [count]);
+
+     return (
+       <div>
+         <p>Count: {count}</p>
+         <button onClick={() => setCount(count + 1)}>Add</button>
+       </div>
+     );
+   }
+
+5. Dependency Types:
+   - [] => once render aagumbo mattum run agum
+   - [value] => value change aana mattum run agum
+
+6. useEffect la cleanup:
+   useEffect(() => {
+     // start
+     return () => {
+       // cleanup
+     }
+   }, []);
+
+7. Notes:
+   - useEffect ku veliya asynchronous code ezhuthakoodadhu.
+   - Adhukaga useEffect ulle async function call pannanum.
+
+8. Common Uses:
+   - Fetch data from API
+   - Console log or alert
+   - Set Interval / Timeout
+   - Add event listeners
+
+The End ✅
+_______________________________________________________________________________________________________________________________________
+
+different waysof UseEffect
+________________
+import React, { useEffect, useState } from 'react'
+
+const Timer = () => {
+
+           const [count , setCount] = useState(1);
+           useEffect(()=>{
+                 console.log("redere it")
+                 conditionCheck()
+
+  },[count])
+
+
+           function click()
+           {
+            setCount((e)=>{ return e+1})
+           }
+           function conditionCheck(){
+               if(count>10){
+                 setCount(1)
+               }
+           }
+        
+  return (
+
+    <div> <h1>Timer count : {count}</h1>
+    <button onClick={click}> increment </button>
+    </div>
+  )
+}
+
+
+
+export default Timer
+
+
+-> ithula 10 ku mela vanthchuna naama 1 aagiruvo
+______________________________________________________________________________________________
+
+without array
+------------------
+
+ const [count , setCount] = useState(0);
+           useEffect(()=>{
+                setCount(1)
+           })
+
+
+-> ithumuuliyama naama some information na before re vaangi vechukkalam after load aagum
+->Page render aana ovvoru thadavaiyum useEffect run aagum.
+->Ithu render ku render run aagum — not efficient always.
+
+
+
+--------------------
+with array
+-------------
+
+ const [count , setCount] = useState(0);
+           useEffect(()=>{
+                setCount(1)
+           },[])
+
+
+->Page first time load aana (i.e., component mount aana) nerathula oru murai dhan run aagum.
+Best for: API call on mount, one-time setup.
+________________________________________________________________________________________________
+
+Timer//
+
+const [count , setCount] = useState(1);
+           useEffect(()=>{
+                
+                setTimeout(()=>{
+                  setCount((prev)=>prev+1)},1000
+                )
+           })
+
+oru oru sec ku page reder aagite irukkum  -> ippadi use pandrnala slow aaga chances irulkku
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________
+
+
+
+Form
+
+_____
+
+
+
+
+Getting input 
+
+-------------
+
+
+import React, { useState } from "react";
+function Formm(){
+     const [name,setName] = useState('')
+    console.log("cirrnt state :" + name);
+    return (<>
+     <form>
+        <label>
+            Enter Your Name: <input type="text"  onChange={(e)=>{setName(e.target.value)}}/>   -> oru oru time value enter pannumbothu name la store aagum
+        </label>
+     </form>
+    </>);
+}
+export default Formm
+
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________
+
+
+Submit
+--------
+
+
+import React, { useState } from "react";
+function Formm(){
+     const [name,setName] = useState('')
+    
+    function handleSubmit(e){
+        e.preventDefault()                                     -> browser refresh aaguratha thadukkum so nammaku submit aana vela nadakkum
+        console.log("Form submied :\n "+ name )
+    }
+    return (<>
+     <form onSubmit={handleSubmit}>
+        <label>
+            Enter Your Name: <input type="text"  onChange={(e)=>{setName(e.target.value)}}/>
+        </label>
+        <br /><br />
+        <input type="submit" value={"Submit Button"}/>
+     </form>
+    </>);
+}
+export default Formm
+
+____________________________________________________________________________________________________________________________________________________________
+
+Handling multiple input field
+-------------------------------
+import React, { useState } from "react";
+function Formm(){
+     const [name,setName] = useState('')
+     const [age,setAge] = useState('')
+     const [email,setEmail] = useState('')
+    
+    function handleSubmit(e){
+        e.preventDefault()
+        console.log("Form submied :\n "+ name  +"- "+ age+ " -"+ email)
+    }
+    return (<>
+     <form onSubmit={handleSubmit}>
+        <label>
+            Enter Your Name: <input type="text"  onChange={(e)=>{setName(e.target.value)}}/>
+        </label><br />
+        <label>
+            Enter Your age: <input type="number"  onChange={(e)=>{setAge(e.target.value)}}/>
+        </label><br />
+        <label>
+            Enter Your email: <input type="email"  onChange={(e)=>{setEmail(e.target.value)}}/>
+        </label>
+        
+        <br /><br />
+        <input type="submit" value={"Submit Button"}/>
+     </form>
+    </>);
+}
+export default Formm
+
+
+
+
+
+->  but ore state kulla kudukanum na?
+
+ object la store pablam
+____________________________________________________________________________________________________________________________________________________________
+
+
+in object
+
+import React, { useState } from "react";
+function Formm(){
+     const [details,setDetail] = useState({})
+     
+    
+    function handleSubmit(e){
+        e.preventDefault()
+        console.log("Form submied :\n "+ details.name  +"- "+ details.age+ " -"+ details.email)
+    }
+    return (<>
+     <form onSubmit={handleSubmit}>
+        <label>
+            Enter Your Name: <input type="text"  onChange={(e)=>{setDetail({name: e.target.value})}}/>
+        </label><br />
+        <label>
+            Enter Your age: <input type="number"  onChange={(e)=>{setDetail( {age: e.target.value})}}/>
+        </label><br />
+        <label>
+            Enter Your email: <input type="email"  onChange={(e)=>{setDetail({email: e.target.value})}}/>
+        </label>
+        
+        <br /><br />
+        <input type="submit" value={"Submit Button"}/>
+     </form>
+    </>);
+}
+export default Formm
+
+
+
+->problem enna na last ta enter panna values mattum tha store aavuthu  
+
+-> prev data va store pannanum
+
+
+
+---------
+
+
+
+ <form onSubmit={handleSubmit}>
+        <label>
+            Enter Your Name: <input type="text"  onChange={(e)=>{setDetail((ps)=>{return {...ps, name: e.target.value}})}}/>
+        </label><br />
+        <label>
+            Enter Your age: <input type="number"  onChange={(e)=>{setDetail( {...details,age: e.target.value})}}/>
+        </label><br />
+        <label>
+            Enter Your email: <input type="email"  onChange={(e)=>{setDetail({...details,email: e.target.value})}}/>
+        </label>
+        
+        <br /><br />
+        <input type="submit" value={"Submit Button"}/>
+     </form>
+
+
+ so arrow function use pannlam  or object name vechu panlam
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________
+
+but code perusa irukuran naala function vechukalam
+--------------------------------------------------
+
+function handleChange(e){
+        let name = e.target.name
+        let value = e.target.value
+
+        setDetail((ps)=>{return {...ps, [name]: value}})
+    }
+    return (<>
+     <form onSubmit={handleSubmit}>
+        <label>
+            Enter Your Name: <input type="text" name= 'name'  onChange={handleChange}/>
+        </label><br />
+        <label>
+            Enter Your age: <input type="number"  name ='age' onChange={handleChange}/>
+        </label><br />
+        <label>
+            Enter Your email: <input type="email"  name ='email' onChange={handleChange}/>
+        </label>
+        
+        <br /><br />
+        <input type="submit" value={"Submit Button"}/>
+     </form>
+
+____________________________________________________________________________________________________________________________________________________________
+nammaku bol liye |+91 vantha nallairukkum nu thonum|
+		 -----------------------------------
+
+athuku
+
+const [details,setDetail] = useState({phone:"+91"})
+
+
+
+ <label>
+            Enter Your phone: <input type="text"  name ='phone' value={details.phone} onChange={handleChange}/>
+        </label>
+
+
+
+________________________________________________________________________________________________________________________________________________
+
+
+Select option
+-------------
+
+
+import React, { useState } from "react";
+function Formm(){
+     const [details,setDetail] = useState({phone:"+91" })
+     
+    
+    function handleSubmit(e){
+        e.preventDefault()
+        console.log("Form submied :\n "+ details.name  +"- "+ details.age+ " -"+ details.email +"-"+details.country +"-" +details.phone)
+    }
+    function handleChange(e){
+        let name = e.target.name
+        let value = e.target.value
+
+        setDetail((ps)=>{return {...ps, [name]: value}})
+    }
+    return (<>
+     <form onSubmit={handleSubmit}>
+        <label>
+            Enter Your Name: <input type="text" name= 'name'  onChange={handleChange}/>
+        </label><br />
+        <label>
+            Enter Your age: <input type="number"  name ='age' onChange={handleChange}/>
+        </label><br />
+        <label>
+            Enter Your email: <input type="email"  name ='email' onChange={handleChange}/>
+        </label><br />
+        <label>
+            Enter Your phone: <input type="text"  name ='phone' value={details.phone} onChange={handleChange}/>
+        </label><br />
+        <label > Select Country:
+              <select name="country" value={details.country}  onChange={handleChange}>
+              <option value="">Select</option>
+              <option value="India">India</option>
+              <option value ="USA">USA</option>
+              <option value ="CHINA">China</option>
+                 
+              </select>
+        </label>
+        
+        <br /><br />
+        <input type="submit" value={"Submit Button"}/>
+     </form>
+    </>);
+}
+export default Formm
+
+
+______________________________________________________________________________________________________________________________________
+
+📝 React Router – Basic Thanglish Note
+
+📌 Router na enna?
+React Router na oru library.
+Single Page App (SPA) la multiple pages maari behave pannurathukku use pannuvanga.
+
+👉 Simple-a sollanum na:
+- Reload illaama oru page-lendu inoru page-ku move aagurathu
+- URL maariyum, page content change aagum
+- Example: /home, /about, /contact
+
+📌 Why React Router?
+
+- Normal React-la oru component mattum render aagum
+- Router use pannina URL-ku match aana component show aagum
+- User experience nalla irukkum (fast & smooth)
+
+📌 React Router use panna steps:
+
+1. Install:  
+   npm install react-router-dom
+
+2. App-ku BrowserRouter use pannanum
+
+3. Routes & Route la path define pannalam
+
+📌 Example:
+If user /about pona:
+<Route path="/about" element={<About />} />
+→ About component than show aagum
+
+
+
+
+import logo from './logo.svg';
+import './App.css';
+import React from 'react';
+import About from './Component/About';
+import Contact from './Component/Contact';
+import Home from './Component/Home';
+
+import { BrowserRouter, Routes, Route ,Link} from 'react-router-dom';
+
+function App() {
+  return (
+    <div className='App'>
+        
+  <BrowserRouter>
+      
+    <Routes>
+        <Route path='/' element={<Home/>}> </Route>
+        <Route path='/About' element={<About/>}> </Route>
+        <Route path='/Contact' element={<Contact/>}></Route>
+
+      </Routes>
+      </BrowserRouter>
+    </div>
+    
+  );
+}
+
+export default App;
+
+
+________________________________________________________________________________________________________________________________________________ 
+
+-> Link in router
+----------------------
+
+-> ithula mathaa page ku link kudukanum na   a tag  ku pathula Link tag tha use pannanum athum browserRouter ku ulla
+
+
+📝 React Router – Link Component Note (Thanglish)
+
+📌 Link na enna?
+
+React app-la normal <a> tag use panna page full reload aagum.
+But <Link> use pannina reload aagala. Fast navigation kidaikkum.
+
+📌 Import panna:
+import { Link } from 'react-router-dom';
+
+📌 Syntax:
+<Link to="/path">Click Here</Link>
+
+Example:
+<Link to="/about">Go to About Page</Link>
+
+Ithu click pannumbothu URL maariyum,
+athi path-ku match aana component render aagum.
+
+📌 Why use Link instead of <a>?
+
+❌ <a href="/about"> → Full reload aagum
+✅ <Link to="/about"> → Single Page App feel (no reload)
+
+📌 Multiple Links Example:
+
+<nav>
+  <Link to="/">Home</Link> | <Link to="/about">About</Link>
+</nav>
+
+_________________________________________________________________________________________________________________
+
+User Params       =  Router params
+------------
+
+📝 React Router – useParams (Thanglish Explanation)
+
+📌 useParams na enna?
+- useParams hook-oda use panni URL-la irukkura dynamic values (params) ah eduthukka mudiyum.
+
+📌 Example: Route-la param use panradhu
+
+<Route path="/user/:id" element={<User />} />
+
+Ithu meaning:
+- "/user/7" nu ponna `id` = 7 ah useParams moolama eduthukkalam.
+
+📌 Component side:
+
+import { useParams } from 'react-router-dom';
+
+function User() {
+  const { id } = useParams();  // destructuring param
+
+  return (
+    <div>
+      <h2>User ID: {id}</h2>
+    </div>
+  );
+}
+
+📌 Link to pass param:
+
+<Link to="/user/5">Go to User 5</Link>
+
+📌 useParams-ku use:
+✅ Blog post detail page (/blog/:postId)
+✅ Profile page (/user/:username)
+✅ Product detail page (/product/:id)
+
+📌 Multiple params example:
+
+<Route path="/user/:id/:name" element={<User />} />
+
+useParams output → { id: "1", name: "Arun" }
+
+
+
+__________________________________________________________________________________
+
+
+Another page la link ku navigate use pannu vom
+
+
+_____________________________________________________________________________________________________________________________
+
+
+CRUD project
+------------
+
+
+       ->  designing ku  
+
+
+        install
+
+      npm i @blueprintjs
+
+
+
+Json plceholde - dummy backed serve for practise
